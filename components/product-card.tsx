@@ -78,21 +78,19 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           <button
             onClick={handleFavoriteToggle}
             className={`p-3 rounded-full shadow-md ${
-              isFavorited(product.id)
-                ? "bg-red-500 text-white"
-                : "bg-white text-gray-700"
+              isFavorited ? "bg-red-500 text-white" : "bg-white text-gray-700"
             }`}
           >
             <Heart
               className="w-5 h-5"
-              fill={isFavorited(product.id) ? "currentColor" : "none"}
+              fill={isFavorited ? "currentColor" : "none"}
             />
           </button>
           <button
             onClick={handleAddToCart}
-            className="p-2 rounded-full shadow bg-white text-gray-700 relative"
+            className="p-3 rounded-full shadow bg-white text-gray-700 relative"
           >
-            <ShoppingCart className="w-4 h-4" />
+            <ShoppingCart className="w-5 h-5" />
             {isInCart && (
               <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-green-500 rounded-full" />
             )}

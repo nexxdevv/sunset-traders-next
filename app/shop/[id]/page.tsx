@@ -1,11 +1,13 @@
 import ProductPageClient from "./product-page-client"
 import { products } from "@/data/products"
 
-export default async function ProductPage({
-  params
-}: {
-  params: { id: string }
-}) {
+interface PageProps {
+  params: {
+    id: string
+  }
+}
+
+export default function ProductPage({ params }: PageProps) {
   const product = products.find((p) => p.id === params.id)
 
   if (!product) {

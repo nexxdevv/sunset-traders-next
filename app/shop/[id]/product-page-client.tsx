@@ -87,14 +87,12 @@ export default function ProductPageClient({ product }: { product: Product }) {
           <button
             onClick={handleFavorite}
             className={`p-3 rounded-full shadow-md ${
-              isFavorited(product.id)
-                ? "bg-red-500 text-white"
-                : "bg-white text-gray-700"
+              isFavorited ? "bg-red-500 text-white" : "bg-white text-gray-700"
             }`}
           >
             <Heart
               className="w-5 h-5"
-              fill={isFavorited(product.id) ? "currentColor" : "none"}
+              fill={isFavorited ? "currentColor" : "none"}
             />
           </button>
           <button
