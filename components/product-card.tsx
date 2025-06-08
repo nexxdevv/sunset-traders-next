@@ -37,11 +37,17 @@ export default function ProductCard({ product, index }: ProductCardProps) {
   const handleFavoriteToggle = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+
     if (!isAuthenticated) {
       alert("Please log in to favorite items!")
       return
     }
-    isFavorited ? removeFavorite(product.id) : addFavorite(product.id)
+
+    if (isFavorited) {
+      removeFavorite(product.id)
+    } else {
+      addFavorite(product.id)
+    }
   }
 
   const handleAddToCart = (e: React.MouseEvent) => {
