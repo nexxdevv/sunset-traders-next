@@ -5,8 +5,7 @@ import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import ProductCard from "./product-card"
 import ProductFullScreenView from "./product-fullscreen-view"
-import { Grid, Maximize2, Minimize2 } from "lucide-react" // Icons for toggle button
-import { products } from "../data/products" // Your product data
+import { Maximize2, Minimize2 } from "lucide-react" // Icons for toggle button
 import { Product } from "../types/product" // Assuming you have a Product type defined
 
 type ViewMode = "grid" | "fullscreen"
@@ -16,10 +15,7 @@ interface ProductDisplayProps {
   selectedCategory: string
 }
 
-export default function ProductDisplay({
-  products,
-  selectedCategory
-}: ProductDisplayProps) {
+export default function ProductDisplay({ products }: ProductDisplayProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("grid")
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     null
@@ -29,10 +25,6 @@ export default function ProductDisplay({
     ? products.find((p) => p.id === selectedProductId)
     : null
 
-  const selectedProductIndex = selectedProduct
-    ? products.findIndex((p) => p.id === selectedProductId)
-    : -1
-
   const handleProductClick = (id: string) => {
     setSelectedProductId(id)
     setViewMode("fullscreen")
@@ -41,18 +33,6 @@ export default function ProductDisplay({
   const handleCloseFullScreen = () => {
     setViewMode("grid")
     setSelectedProductId(null) // Optional: clear selection after closing
-  }
-
-  const handleNextProduct = () => {
-    if (selectedProductIndex < products.length - 1) {
-      setSelectedProductId(products[selectedProductIndex + 1].id)
-    }
-  }
-
-  const handlePrevProduct = () => {
-    if (selectedProductIndex > 0) {
-      setSelectedProductId(products[selectedProductIndex - 1].id)
-    }
   }
 
   const toggleViewMode = () => {
@@ -111,7 +91,6 @@ export default function ProductDisplay({
                   ...product,
                   price: product.price.toString()
                 }}
-                onClick={handleProductClick}
                 index={index}
               />
             ))}

@@ -1,10 +1,6 @@
 import ProductPageClient from "./product-page-client"
 import { products } from "@/data/products"
 
-type ShopParams = {
-  id: string
-}
-
 export default async function ProductPage({
   params
 }: {
@@ -18,7 +14,9 @@ export default async function ProductPage({
   }
 
   // Convert price to number if product exists
-  const fixedProduct = product ? { ...product, price: Number(product.price) } : undefined;
+  const fixedProduct = product
+    ? { ...product, price: Number(product.price) }
+    : undefined
 
-  return fixedProduct ? <ProductPageClient product={fixedProduct} /> : null;
+  return fixedProduct ? <ProductPageClient product={fixedProduct} /> : null
 }

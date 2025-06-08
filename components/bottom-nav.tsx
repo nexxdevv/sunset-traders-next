@@ -22,7 +22,7 @@ const BottomNavbar = ({ activePath }: BottomNavbarProps) => {
     IconComponent,
     path
   }: {
-    IconComponent: any
+    IconComponent: React.ComponentType<React.SVGProps<SVGSVGElement>>
     path: string
   }) => (
     <div className={navItemClass(path)}>

@@ -2,7 +2,7 @@
 
 import { useCartStore } from "@/stores/cartStore"
 import { useUserStore } from "@/stores/userStore"
-import { Heart, ShoppingCart } from "lucide-react"
+import { Heart } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 

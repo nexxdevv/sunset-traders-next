@@ -2,7 +2,6 @@
 
 import { useRef, useEffect } from "react"
 import { cn } from "@/lib/utils"
-import { ChevronDown } from "lucide-react"
 
 interface CategorySelectorProps {
   categories: string[]
