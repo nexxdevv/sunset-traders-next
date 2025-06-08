@@ -8,12 +8,12 @@ interface PageProps {
   }
 }
 
-export default function ProductPage({ params }: PageProps) {
+export default async function ProductPage({ params }: PageProps) {
   const product = products.find((p) => p.id === params.id)
 
   if (!product) return null
 
   const fixedProduct = { ...product, price: Number(product.price) }
 
-  return <ProductPageClient product={fixedProduct} />
+  return <ProductPageClient product={await Promise.resolve(fixedProduct)} />
 }
