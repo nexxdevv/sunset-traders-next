@@ -15,7 +15,14 @@ interface ProductDisplayProps {
   selectedCategory: string
 }
 
-export default function ProductDisplay({ products }: ProductDisplayProps) {
+export default function ProductDisplay({
+  products,
+  selectedCategory
+}: ProductDisplayProps) {
+  const filteredProducts =
+    selectedCategory === "All"
+      ? products
+      : products.filter((product) => product.category === selectedCategory)
   const [viewMode, setViewMode] = useState<ViewMode>("grid")
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     null
@@ -41,11 +48,11 @@ export default function ProductDisplay({ products }: ProductDisplayProps) {
   }
 
   return (
-    <div className="relative min-h-screen pt-5 bg-white dark:bg-gray-900 text-gray-900  dark:text-gray-100 p-4 scrollbar-hide">
+    <div className="relative min-h-screen pt-16 bg-white dark:bg-gray-900 text-gray-900  dark:text-gray-100 p-3 scrollbar-hide">
       {/* Toggle Button */}
       <button
         onClick={toggleViewMode}
-        className="fixed bottom-[108px] right-4 p-3 rounded-full
+        className="fixed bottom-[108px] right-3 p-3 rounded-full
                    bg-white/90 dark:bg-dark-accent text-black/50 dark:text-dark-bg
                    shadow-lg hover:shadow-xl  z-[70]
                    flex items-center justify-center gap-2"
@@ -68,18 +75,16 @@ export default function ProductDisplay({ products }: ProductDisplayProps) {
         {viewMode === "grid" && (
           <motion.div
             key="product-grid"
-            initial={{ opacity: 0, y: 0 }}
-            animate={{ opacity: 1, y: 50 }}
-            exit={{ opacity: 0, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
             transition={{
               duration: 0.5,
               ease: "easeInOut",
-              delayChildren: 0.5,
-              staggerChildren: 0.1
             }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-32 scrollbar-hide" // pb-20 to clear bottom navbar/toggle
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-24 scrollbar-hide"
           >
-            {products.map((product, index) => (
+            {filteredProducts.map((product, index) => (
               <ProductCard
                 key={product.id}
                 product={{

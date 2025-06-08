@@ -67,10 +67,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         className="relative flex flex-col items-center justify-center
                    bg-white dark:bg-gray-800 rounded-lg overflow-hidden
                    shadow-lg hover:shadow-xl cursor-pointer aspect-square"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.3, ease: "easeInOut", delay: index * 0.1 }}
+      
         tabIndex={0}
         role="link"
       >
@@ -102,11 +99,11 @@ export default function ProductCard({ product, index }: ProductCardProps) {
           alt={product.name}
           width={200}
           height={200}
-          className="w-full h-auto object-cover"
+          className="w-full h-full object-cover"
           priority={index < 4}
         />
         <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/40 to-transparent text-white">
-          <h3 className="font-semibold leading-tight">{product.name}</h3>
+          <h3 className=" leading-tight">{product.name}</h3>
           <p className="font-medium">${product.price}</p>
         </div>
       </motion.div>

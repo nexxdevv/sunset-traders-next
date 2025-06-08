@@ -20,7 +20,8 @@ interface ProductFullScreenViewProps {
 }
 
 export default function ProductFullScreenView({
-  products
+  products,
+  onClose
 }: ProductFullScreenViewProps) {
   const { favorites, addFavorite, removeFavorite, isAuthenticated } =
     useUserStore()
@@ -35,11 +36,7 @@ export default function ProductFullScreenView({
       alert("Please log in to favorite items!")
       return
     }
-    if (isFavorited(productId)) {
-      removeFavorite(productId)
-    } else {
-      addFavorite(productId)
-    }
+    isFavorited(productId) ? removeFavorite(productId) : addFavorite(productId)
   }
 
   const handleAddToCart = (product: Product) => {
@@ -52,31 +49,43 @@ export default function ProductFullScreenView({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -50 }}
+      initial={{ opacity: 0, scale: 1.2 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.75, transition: { duration: 0.3 } }}
       transition={{ duration: 0.3, ease: "easeInOut", delay: 0.1 }}
-      className="fixed inset-0 bg-white dark:bg-gray-900 z-50 overflow-y-auto snap-y snap-mandatory h-screen"
+      className="fixed inset-0 z-50 bg-black overflow-y-auto snap-y snap-mandatory"
     >
       {products.map((product) => (
         <div
           key={product.id}
-          className="h-screen flex flex-col items-center justify-center snap-start p-4 md:p-8 relative"
+          className="relative w-full h-screen snap-start bg-black overflow-hidden"
         >
+          {/* Fullscreen Image */}
           <Image
             src={product.image}
             alt={product.name}
-            width={600}
-            height={600}
-            className="w-full max-w-md h-auto object-contain rounded-lg shadow-xl"
+            fill
+            className="object-cover w-full h-full"
             priority
           />
 
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black/10" />
+
+          {/* Product Details Fixed to Bottom */}
+          <div className="absolute bottom-0 left-0 right-0 p-6 text-white bg-gradient-to-t from-black/70 to-transparent">
+            <h2 className="font-semibold text-[1.1rem] leading-tight">
+              {product.name}
+            </h2>
+            <p className="font-semibold leading-tight">${product.price}</p>
+            <p className=" mt-1">{product.description}</p>
+          </div>
+
           {/* Floating Buttons */}
-          <div className="absolute right-6 top-1/2 transform -translate-y-1/2 space-y-4 flex flex-col">
+          <div className="absolute top-1/2 -translate-y-1/2 right-3 flex flex-col items-center justify-center space-y-4 z-10">
             <button
               onClick={() => handleFavoriteToggle(product.id)}
-              className={`p-3 rounded-full shadow-md ${
+              className={`p-3 rounded-full shadow-lg transition-colors ${
                 isFavorited(product.id)
                   ? "bg-red-500 text-white"
                   : "bg-white text-gray-700"
@@ -89,23 +98,13 @@ export default function ProductFullScreenView({
             </button>
             <button
               onClick={() => handleAddToCart(product)}
-              className="p-3 rounded-full shadow-md bg-white text-gray-700 relative"
+              className="p-3 rounded-full bg-white text-gray-700 relative shadow-lg"
             >
               <ShoppingCart className="w-5 h-5" />
               {isInCart(product.id) && (
                 <span className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full" />
               )}
             </button>
-          </div>
-
-          <div className="mt-4 ">
-            <h2 className="font-semibold text-gray-900 dark:text-gray-100">
-              {product.name}
-            </h2>
-            <p className="text-gray-700 dark:text-gray-300">${product.price}</p>
-            <p className="text-gray-600 max-w-[90%] dark:text-gray-400 mt-2">
-              {product.description}
-            </p>
           </div>
         </div>
       ))}

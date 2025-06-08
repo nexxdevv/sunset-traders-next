@@ -3,36 +3,33 @@ import { Product } from "../types/product"
 export const products: Product[] = [
   {
     id: "1",
-    name: "Vintage Leather",
-    price: "89",
+    name: "Giorgio Armani AR8186",
+    price: "40",
     description:
-      "Classic brown leather jacket with vintage patina. Perfect for any season.",
-    image:
-      "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=600&fit=crop&crop=center",
-    category: "jackets",
+      "Stylish Italian sunglasses with polarized lenses. Light weight and comfortable fit for men and women.",
+    image: "/sunnies.png",
+    category: "sunglasses",
     dateAdded: "2025-06-01"
   },
 
   {
     id: "3",
-    name: "Vintage Gold Watch",
-    price: "450",
+    name: "AirPods",
+    price: "20",
     description:
-      "Authentic vintage gold watch. A true collector's piece with classic design.",
-    image:
-      "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&h=600&fit=crop&crop=center",
-    category: "watches",
+      "Wireless earbuds with noise cancellation. Perfect for music lovers.",
+    image: "/airpods.png",
+    category: "electronics",
     dateAdded: "2025-06-03"
   },
   {
     id: "4",
-    name: "Designer Backpack",
-    price: "120",
+    name: "Hunting Knife",
+    price: "10",
     description:
-      "Premium leather backpack with multiple compartments. Excellent condition.",
-    image:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=600&fit=crop&crop=center",
-    category: "backpacks",
+      "High-quality black blade hunting knife. Slightly used but in great condition.",
+    image: "/knife.png",
+    category: "knives",
     dateAdded: "2025-06-04"
   },
   {

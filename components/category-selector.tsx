@@ -38,7 +38,7 @@ export default function CategorySelector({
   return (
     <div
       ref={scrollContainerRef}
-      className="flex fixed top-0 left-0 right-0 items-center gap-2 overflow-x-auto pt-4 pb-2 px-4 scrollbar-hide overflow-y-hidden z-[60]"
+      className="flex fixed top-0 left-0 right-0 items-center gap-2 overflow-x-auto pt-4 pb-2 px-3 scrollbar-hide overflow-y-hidden z-[60]"
     >
       {categories.map((category) => {
         const isActive = category === selectedCategory
@@ -48,10 +48,8 @@ export default function CategorySelector({
             ref={isActive ? activeButtonRef : null}
             onClick={() => onSelectCategory(category)}
             className={cn(
-              "px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all shadow-sm capitalize duration-700 ease-in-out",
-              isActive
-                ? "bg-gray-700 text-white"
-                : "bg-gray-100 text-gray-700  "
+              "px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all shadow-sm capitalize duration-700 ease-in-out text-gray-700",
+              isActive ? "bg-yellow-400 " : "bg-gray-100   "
             )}
           >
             {category}

@@ -10,12 +10,16 @@ export default function Home() {
   return (
     <main className="min-h-screen flex items-center justify-center scrollbar-hide">
       <CategorySelector
-        categories={products
-          .map((product) => product.category)
-          .filter((value, index, self) => self.indexOf(value) === index)}
+        categories={[
+          "All",
+          ...products
+            .map((product) => product.category)
+            .filter((value, index, self) => self.indexOf(value) === index)
+        ]}
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
       />
+
       <ProductDisplay products={products} selectedCategory={selectedCategory} />
     </main>
   )
