@@ -25,11 +25,6 @@ export default function ProductDisplay({ products }: ProductDisplayProps) {
     ? products.find((p) => p.id === selectedProductId)
     : null
 
-  const handleProductClick = (id: string) => {
-    setSelectedProductId(id)
-    setViewMode("fullscreen")
-  }
-
   const handleCloseFullScreen = () => {
     setViewMode("grid")
     setSelectedProductId(null) // Optional: clear selection after closing

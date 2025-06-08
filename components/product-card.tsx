@@ -18,10 +18,7 @@ interface ProductCardProps {
   index: number
 }
 
-export default function ProductCard({
-  product,
-  index,
-}: ProductCardProps) {
+export default function ProductCard({ product, index }: ProductCardProps) {
   const { favorites, addFavorite, removeFavorite, isAuthenticated } =
     useUserStore()
   const { cartItems, addToCart } = useCartStore()
@@ -74,13 +71,15 @@ export default function ProductCard({
         <div className="absolute top-2 left-2 right-2 z-10 flex justify-center gap-3 px-2">
           <button
             onClick={handleFavoriteToggle}
-            className={`p-2 rounded-full shadow bg-white ${
-              !isFavorited ? "text-gray-700" : ""
+            className={`p-3 rounded-full shadow-md ${
+              isFavorited(product.id)
+                ? "bg-red-500 text-white"
+                : "bg-white text-gray-700"
             }`}
           >
             <Heart
-              className={`w-4 h-4 ${isFavorited ? "text-red-500" : ""}`}
-              fill={isFavorited ? "red" : "none"}
+              className="w-5 h-5"
+              fill={isFavorited(product.id) ? "currentColor" : "none"}
             />
           </button>
           <button

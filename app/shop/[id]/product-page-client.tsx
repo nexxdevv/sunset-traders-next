@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useCartStore } from "@/stores/cartStore"
 import { useUserStore } from "@/stores/userStore"
@@ -15,20 +15,23 @@ interface Product {
 }
 
 export default function ProductPageClient({ product }: { product: Product }) {
-  const { favorites, addFavorite, removeFavorite, isAuthenticated } = useUserStore()
+  const { favorites, addFavorite, removeFavorite, isAuthenticated } =
+    useUserStore()
   const { cartItems, addToCart } = useCartStore()
 
   const isFavorited = favorites.includes(product.id)
-interface CartItem {
+  interface CartItem {
     id: string
     name: string
     description: string
     price: number
     image: string
     // Add other properties if needed
-}
+  }
 
-const isInCart: boolean = (cartItems as CartItem[]).some((item: CartItem) => item.id === product.id)
+  const isInCart: boolean = (cartItems as CartItem[]).some(
+    (item: CartItem) => item.id === product.id
+  )
 
   const handleFavorite = () => {
     if (!isAuthenticated) {
@@ -75,15 +78,15 @@ const isInCart: boolean = (cartItems as CartItem[]).some((item: CartItem) => ite
         <div className="flex gap-4">
           <button
             onClick={handleFavorite}
-            className={`px-4 py-4 rounded-full shadow-md transition ${
-              isFavorited
+            className={`p-3 rounded-full shadow-md ${
+              isFavorited(product.id)
                 ? "bg-red-500 text-white"
-                : "bg-gray-200 text-gray-700"
+                : "bg-white text-gray-700"
             }`}
           >
             <Heart
               className="w-5 h-5"
-              fill={isFavorited ? "currentColor" : "none"}
+              fill={isFavorited(product.id) ? "currentColor" : "none"}
             />
           </button>
           <button
