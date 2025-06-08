@@ -6,9 +6,10 @@ export const useUserStore = create(
   persist(
     (set) => ({
       user: null, // Firebase user object
-      isAuthenticated: false,
+      isAuthenticated: false, // Initial state
       favorites: [], // Array of favorite product IDs
 
+      // This action correctly updates isAuthenticated based on userData presence
       setUser: (userData) =>
         set({ user: userData, isAuthenticated: !!userData }),
       addFavorite: (productId) =>
@@ -22,8 +23,12 @@ export const useUserStore = create(
     }),
     {
       name: "user-storage", // unique name
-      storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
-      partialize: (state) => ({ favorites: state.favorites }) // Only persist favorites
+      storage: createJSONStorage(() => localStorage),
+      // Include isAuthenticated in partialize so it's saved/loaded
+      partialize: (state) => ({
+        favorites: state.favorites,
+        isAuthenticated: state.isAuthenticated // <--- ADD THIS LINE
+      })
     }
   )
 )

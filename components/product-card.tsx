@@ -21,7 +21,7 @@ interface ProductCardProps {
 export default function ProductCard({ product, index }: ProductCardProps) {
   const { favorites, addFavorite, removeFavorite, isAuthenticated } =
     useUserStore()
-  const { cartItems, addToCart } = useCartStore()
+  const { cartItems, addToCart, removeItem } = useCartStore()
 
   const isFavorited = favorites.includes(product.id)
   interface CartItem {
@@ -54,7 +54,10 @@ export default function ProductCard({ product, index }: ProductCardProps) {
     e.preventDefault()
     e.stopPropagation()
     if (isInCart) {
-      alert("Already in cart!")
+      removeItem(product.id)
+      return
+    }
+    if (!isAuthenticated) {
       return
     }
     addToCart(product)
@@ -67,7 +70,6 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         className="relative flex flex-col items-center justify-center
                    bg-white dark:bg-gray-800 rounded-lg overflow-hidden
                    shadow-lg hover:shadow-xl cursor-pointer aspect-square"
-      
         tabIndex={0}
         role="link"
       >

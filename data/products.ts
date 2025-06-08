@@ -32,17 +32,7 @@ export const products: Product[] = [
     category: "knives",
     dateAdded: "2025-06-04"
   },
-  {
-    id: "5",
-    name: "Yankees Baseball Cap",
-    price: "25",
-    description:
-      "Classic New York Yankees baseball cap. Slightly worn but authentic.",
-    image:
-      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=400&h=600&fit=crop&crop=center",
-    category: "hats",
-    dateAdded: "2025-06-05"
-  },
+
   {
     id: "6",
     name: "Vintage Leather Handbag",

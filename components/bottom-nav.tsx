@@ -1,6 +1,6 @@
 // components/BottomNavbarLucideTailwind.js
 import Link from "next/link"
-import { Home, Search, Send, User } from "lucide-react"
+import { Home, Search, Send, User, Heart } from "lucide-react"
 
 interface BottomNavbarProps {
   activePath: string
@@ -8,11 +8,11 @@ interface BottomNavbarProps {
 
 const BottomNavbar = ({ activePath }: BottomNavbarProps) => {
   const navItemClass = (path: string) =>
-    `flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 ease-in-out 
+    `flex flex-col items-center justify-center p-2 rounded-lg transition-all font-medium duration-200 ease-in-out 
     ${
       activePath === path
-        ? "font-semibold text-coffee-light-accent dark:text-coffee-dark-accent"
-        : "font-medium text-coffee-light-dark dark:text-coffee-dark-text"
+        ? " text-coffee-light-accent dark:text-coffee-dark-accent"
+        : " text-coffee-light-dark dark:text-coffee-dark-text"
     } 
     hover:text-coffee-light-accent dark:hover:text-coffee-dark-accent`
 
@@ -34,7 +34,7 @@ const BottomNavbar = ({ activePath }: BottomNavbarProps) => {
             : "text-coffee-light-dark dark:text-coffee-dark-text"
         }`}
       />
-      <span className="text-sm">
+      <span className="text-[11px]">
         {path === "/"
           ? "Home"
           : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
@@ -50,8 +50,8 @@ const BottomNavbar = ({ activePath }: BottomNavbarProps) => {
       <Link href="/search" passHref>
         <Icon IconComponent={Search} path="/search" />
       </Link>
-      <Link href="/messages" passHref>
-        <Icon IconComponent={Send} path="/messages" />
+      <Link href="/likes" passHref>
+        <Icon IconComponent={Heart} path="/likes" />
       </Link>
       <Link href="/account" passHref>
         <Icon IconComponent={User} path="/account" />

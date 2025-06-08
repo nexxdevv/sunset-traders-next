@@ -12,16 +12,18 @@ interface Product {
   price: string
   image: string
   description: string
+  category: string
 }
 
 interface ProductFullScreenViewProps {
   products: Product[]
   onClose: () => void
+  selectedCategory?: string
 }
 
 export default function ProductFullScreenView({
   products,
-  onClose
+  selectedCategory
 }: ProductFullScreenViewProps) {
   const { favorites, addFavorite, removeFavorite, isAuthenticated } =
     useUserStore()
@@ -47,6 +49,11 @@ export default function ProductFullScreenView({
     addToCart(product)
   }
 
+  const filteredProducts =
+    selectedCategory === "All"
+      ? products
+      : products.filter((product) => product.category === selectedCategory)
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 1.2 }}
@@ -55,7 +62,7 @@ export default function ProductFullScreenView({
       transition={{ duration: 0.3, ease: "easeInOut", delay: 0.1 }}
       className="fixed inset-0 z-50 bg-black overflow-y-auto snap-y snap-mandatory"
     >
-      {products.map((product) => (
+      {filteredProducts.map((product) => (
         <div
           key={product.id}
           className="relative w-full h-screen snap-start bg-black overflow-hidden"

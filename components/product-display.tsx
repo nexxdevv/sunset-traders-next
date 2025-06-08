@@ -80,7 +80,7 @@ export default function ProductDisplay({
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{
               duration: 0.5,
-              ease: "easeInOut",
+              ease: "easeInOut"
             }}
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-24 scrollbar-hide"
           >
@@ -102,6 +102,7 @@ export default function ProductDisplay({
             key="product-fullscreen"
             products={products}
             onClose={handleCloseFullScreen}
+            selectedCategory={selectedCategory}
           />
         )}
       </AnimatePresence>
