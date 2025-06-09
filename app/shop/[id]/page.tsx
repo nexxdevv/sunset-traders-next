@@ -6,25 +6,20 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { ChevronLeft, ChevronRight, Heart, ShoppingCart, X } from "lucide-react"
 import { products } from "@/data/products"
-import { useUserStore } from "@/stores/userStore"
-import { useCartStore } from "@/stores/cartStore"
 import { Product } from "@/types/product"
 import { useSwipeable } from "react-swipeable"
+import { ProductActions } from "@/components/product-actions"
 
 interface ProductDetailPageProps {
   params: Promise<{ id: string }>
 }
-
-const DEFAULT_PLACEHOLDER_IMAGES = Array(5).fill("/placeholder-square.png")
 
 export default function ProductDetailPage({
   params: paramsPromise
 }: ProductDetailPageProps) {
   const params = use(paramsPromise)
   const router = useRouter()
-  const { favorites, addFavorite, removeFavorite, isAuthenticated } =
-    useUserStore()
-  const { cartItems, addToCart } = useCartStore()
+  
 
   const [product, setProduct] = useState<Product | null>(null)
   const [currentCarouselImageIndex, setCurrentCarouselImageIndex] = useState(0)
@@ -54,21 +49,12 @@ export default function ProductDetailPage({
     )
   }
 
-  const isFavorited = () => favorites.includes(product.id)
-  interface CartItem {
-    id: string
-    // Add other properties if needed, matching Product if required
-  }
+  
+  const hasCarouselImages = (product.carouselImages ?? []).length > 0
 
-  const isInCart = (): boolean =>
-    cartItems.some((item: CartItem) => item.id === product.id)
-
-  const imageList = [
-    product.image,
-    ...(product.carouselImages?.length
-      ? product.carouselImages
-      : DEFAULT_PLACEHOLDER_IMAGES)
-  ]
+  const imageList = hasCarouselImages
+    ? [product.image, ...(product.carouselImages ?? [])]
+    : [product.image]
 
   const handleNext = (e?: React.MouseEvent) => {
     e?.stopPropagation()
@@ -90,7 +76,7 @@ export default function ProductDetailPage({
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 text-gray-800">
       {/* Top Bar */}
-      <div className="fixed top-0 flex items-center right-0 z-10 w-full justify-between p-3">
+      <div className="fixed top-3 flex items-center right-0 z-10 w-full justify-between p-3">
         <button
           onClick={() => router.back()}
           className="ml-3 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
@@ -118,7 +104,7 @@ export default function ProductDetailPage({
             className="object-cover transition-all duration-300"
             priority
           />
-          {imageList.length > 1 && (
+          {hasCarouselImages && (
             <>
               <button
                 onClick={(e) => {
@@ -143,7 +129,7 @@ export default function ProductDetailPage({
         </div>
 
         {/* Thumbnail Scroll Row */}
-        {imageList.length > 1 && (
+        {hasCarouselImages && (
           <div className="flex overflow-x-auto gap-2 px-1">
             {imageList.map((img, idx) => (
               <div
@@ -175,53 +161,7 @@ export default function ProductDetailPage({
             <p className="font-semibold">${product.price}</p>
           </div>
           <div className="flex space-x-4">
-            <button
-              onClick={() => {
-                if (!isAuthenticated()) {
-                  alert("Please log in to favorite items!")
-                } else {
-                  if (isFavorited()) {
-                    removeFavorite(product.id)
-                  } else {
-                    addFavorite(product.id)
-                  }
-                }
-              }}
-              className={`p-3 rounded-full shadow transition-colors ${
-                isFavorited()
-                  ? "bg-red-500 text-white hover:bg-red-600"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              <Heart
-                fill={isFavorited() ? "currentColor" : "none"}
-                strokeWidth={1.5}
-                className="w-6 h-6"
-              />
-            </button>
-
-            <button
-              onClick={() => {
-                if (isInCart()) {
-                  alert("Already in cart!")
-                } else {
-                  addToCart(product)
-                  alert(`${product.name} added to cart!`)
-                }
-              }}
-              className={`p-3 rounded-full shadow ${
-                isInCart()
-                  ? "bg-green-500 text-white"
-                  : "bg-yellow-400 text-white hover:bg-yellow-700"
-              }`}
-            >
-              <ShoppingCart className="w-6 h-6" />
-              {isInCart() && (
-                <span className="absolute top-1 right-1 w-3 h-3 bg-white text-green-600 border border-green-500 rounded-full text-[0.6rem] font-bold flex items-center justify-center">
-                  ✓
-                </span>
-              )}
-            </button>
+            <ProductActions product={product} />
           </div>
         </div>
         <p className="text-gray-700">{product.description}</p>
@@ -240,7 +180,7 @@ export default function ProductDetailPage({
           >
             <X className="w-8 h-8" />
           </button>
-          {imageList.length > 1 && (
+          {hasCarouselImages && (
             <>
               <button
                 onClick={(e) => {

@@ -5,6 +5,7 @@ import { onAuthStateChanged } from "firebase/auth"
 import BottomNav from "@/components/bottom-nav"
 import { auth } from "@/lib/firebase"
 import { useUserStore } from "@/stores/userStore"
+import { CartIcon } from "@/components/cart-icon"
 
 export default function RootLayout({
   children
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-white text-gray-900 antialiased">
+        <CartIcon />
         {children}
         <BottomNav activePath="/" />
       </body>

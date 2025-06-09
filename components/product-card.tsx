@@ -4,64 +4,15 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Heart, ShoppingCart } from "lucide-react"
-import { useUserStore } from "@/stores/userStore"
-import { useCartStore } from "@/stores/cartStore"
+import { ProductActions } from "@/components/product-actions"
+import { Product } from "@/types/product"
 
 interface ProductCardProps {
-  product: {
-    id: string
-    name: string
-    price: string
-    image: string
-    description: string
-  }
+  product: Product
   index: number
 }
 
 export default function ProductCard({ product, index }: ProductCardProps) {
-  const { favorites, addFavorite, removeFavorite } = useUserStore()
-  const { cartItems, addToCart, removeItem } = useCartStore()
-
-  const isFavorited = favorites.includes(product.id)
-  interface CartItem {
-    id: string
-    name: string
-    price: string
-    image: string
-    description: string
-  }
-
-  const isInCart = cartItems.some((item: CartItem) => item.id === product.id)
-
-  const handleFavoriteToggle = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    // if (!isAuthenticated) {
-    //   alert("Please log in to favorite items!")
-    //   return
-    // }
-
-    if (isFavorited) {
-      removeFavorite(product.id)
-    } else {
-      addFavorite(product.id)
-    }
-  }
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    if (isInCart) {
-      removeItem(product.id)
-      return
-    }
-    // if (!isAuthenticated) {
-    //   return
-    // }
-    addToCart(product)
-  }
-
   return (
     <Link href={`/shop/${product.id}`}>
       <motion.div
@@ -73,26 +24,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         role="link"
       >
         <div className="absolute top-2 left-2 right-2 z-10 flex justify-center gap-3 px-2">
-          <button
-            onClick={handleFavoriteToggle}
-            className={`p-3 rounded-full shadow-md ${
-              isFavorited ? "bg-red-500 text-white" : "bg-white text-gray-700"
-            }`}
-          >
-            <Heart
-              className="w-5 h-5"
-              fill={isFavorited ? "currentColor" : "none"}
-            />
-          </button>
-          <button
-            onClick={handleAddToCart}
-            className="p-3 rounded-full shadow bg-white text-gray-700 relative"
-          >
-            <ShoppingCart className="w-5 h-5" />
-            {isInCart && (
-              <span className="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-green-500 rounded-full" />
-            )}
-          </button>
+          <ProductActions product={product} />
         </div>
 
         <Image

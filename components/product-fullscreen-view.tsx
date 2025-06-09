@@ -3,18 +3,10 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { Heart, ShoppingCart } from "lucide-react"
-import { useUserStore } from "@/stores/userStore"
-import { useCartStore } from "@/stores/cartStore"
 import Link from "next/link"
+import { ProductActions } from "./product-actions"
 
-interface Product {
-  id: string
-  name: string
-  price: string
-  image: string
-  description: string
-  category: string
-}
+import type { Product } from "../types/product"
 
 interface ProductFullScreenViewProps {
   products: Product[]
@@ -26,34 +18,8 @@ export default function ProductFullScreenView({
   products,
   selectedCategory
 }: ProductFullScreenViewProps) {
-  const { favorites, addFavorite, removeFavorite } = useUserStore()
-  const { cartItems, addToCart, removeItem } = useCartStore()
 
-  const isInCart = (id: string) =>
-    cartItems.some((item: { id: string }) => item.id === id)
-
-  const isFavorited = (id: string) => favorites.includes(id)
-
-  const handleFavoriteToggle = (productId: string) => {
-    // if (!isAuthenticated()) {
-    //   alert("Please log in to favorite items!")
-    //   return
-    // }
-
-    if (isFavorited(productId)) {
-      removeFavorite(productId)
-    } else {
-      addFavorite(productId)
-    }
-  }
-
-  const handleAddToCart = (product: Product) => {
-    if (isInCart(product.id)) {
-      removeItem(product.id)
-      return
-    }
-    addToCart(product)
-  }
+  
 
   const filteredProducts =
     selectedCategory === "All"
@@ -99,35 +65,7 @@ export default function ProductFullScreenView({
 
           {/* Floating Buttons (Not inside Link) */}
           <div className="absolute top-1/2 -translate-y-1/2 right-3 flex flex-col items-center justify-center space-y-4 z-10">
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                handleFavoriteToggle(product.id)
-              }}
-              className={`p-3 rounded-full shadow-lg transition-colors ${
-                isFavorited(product.id)
-                  ? "bg-red-500 text-white"
-                  : "bg-white text-gray-700"
-              }`}
-            >
-              <Heart
-                className="w-5 h-5"
-                fill={isFavorited(product.id) ? "currentColor" : "none"}
-              />
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                handleAddToCart(product)
-              }}
-              className="p-3 rounded-full bg-white text-gray-700 relative shadow-lg"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              {isInCart(product.id) && (
-                <span className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full" />
-              )}
-            </button>
+            <ProductActions product={product} direction="col" />
           </div>
         </div>
       ))}

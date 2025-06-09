@@ -48,7 +48,7 @@ export default function ProductDisplay({
   }
 
   return (
-    <div className="relative min-h-screen pt-16 bg-white dark:bg-gray-900 text-gray-900  dark:text-gray-100 p-3 scrollbar-hide">
+    <div className="relative min-h-screen pt-16 bg-white dark:bg-gray-900 text-gray-900  dark:text-gray-100 p-3 scrollbar-hide z-10">
       {/* Toggle Button */}
       <button
         onClick={toggleViewMode}
