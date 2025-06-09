@@ -43,7 +43,7 @@ const BottomNavbar = ({ activePath }: BottomNavbarProps) => {
   )
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full py-2 flex justify-around items-center rounded-t-3xl backdrop-blur-sm z-40 bg-white bg-opacity-90 shadow-lg shadow-black/80 dark:bg-merchant dark:bg-opacity-90 dark:shadow-black/50">
+    <nav className="fixed bottom-0 left-0 w-full py-2 flex justify-around items-center rounded-t-3xl backdrop-blur-sm z-30 bg-white bg-opacity-90 shadow-lg shadow-black/80 dark:bg-merchant dark:bg-opacity-90 dark:shadow-black/50">
       <Link href="/" passHref>
         <Icon IconComponent={Home} path="/" />
       </Link>
