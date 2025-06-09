@@ -19,8 +19,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, index }: ProductCardProps) {
-  const { favorites, addFavorite, removeFavorite, isAuthenticated } =
-    useUserStore()
+  const { favorites, addFavorite, removeFavorite } = useUserStore()
   const { cartItems, addToCart, removeItem } = useCartStore()
 
   const isFavorited = favorites.includes(product.id)

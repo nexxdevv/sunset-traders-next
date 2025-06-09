@@ -4,13 +4,7 @@
 import React, { useState, useEffect, use } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import {
-  ChevronLeft,
-  ChevronRight,
-  Heart,
-  ShoppingCart,
-  X,
-} from "lucide-react"
+import { ChevronLeft, ChevronRight, Heart, ShoppingCart, X } from "lucide-react"
 import { products } from "@/data/products"
 import { useUserStore } from "@/stores/userStore"
 import { useCartStore } from "@/stores/cartStore"
@@ -23,7 +17,7 @@ interface ProductDetailPageProps {
 const DEFAULT_PLACEHOLDER_IMAGES = Array(5).fill("/placeholder-square.png")
 
 export default function ProductDetailPage({
-  params: paramsPromise,
+  params: paramsPromise
 }: ProductDetailPageProps) {
   const params = use(paramsPromise)
   const router = useRouter()
@@ -32,8 +26,7 @@ export default function ProductDetailPage({
   const { cartItems, addToCart } = useCartStore()
 
   const [product, setProduct] = useState<Product | null>(null)
-  const [currentCarouselImageIndex, setCurrentCarouselImageIndex] =
-    useState(0)
+  const [currentCarouselImageIndex, setCurrentCarouselImageIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
@@ -55,19 +48,19 @@ export default function ProductDetailPage({
   }
 
   const isFavorited = () => favorites.includes(product.id)
-interface CartItem {
+  interface CartItem {
     id: string
     // Add other properties if needed, matching Product if required
-}
+  }
 
-const isInCart = (): boolean =>
+  const isInCart = (): boolean =>
     cartItems.some((item: CartItem) => item.id === product.id)
 
   const imageList = [
     product.image,
     ...(product.carouselImages?.length
       ? product.carouselImages
-      : DEFAULT_PLACEHOLDER_IMAGES),
+      : DEFAULT_PLACEHOLDER_IMAGES)
   ]
 
   const handleNext = (e?: React.MouseEvent) => {
@@ -105,10 +98,7 @@ const isInCart = (): boolean =>
 
       {/* Carousel */}
       <div className="relative w-full h-[40vh] flex items-center justify-center bg-gray-200 overflow-hidden">
-        <div
-          className="absolute inset-0 cursor-pointer"
-          onClick={openModal}
-        >
+        <div className="absolute inset-0 cursor-pointer" onClick={openModal}>
           <Image
             src={imageList[currentCarouselImageIndex]}
             fill
@@ -153,9 +143,11 @@ const isInCart = (): boolean =>
                 if (!isAuthenticated()) {
                   alert("Please log in to favorite items!")
                 } else {
-                  isFavorited()
-                    ? removeFavorite(product.id)
-                    : addFavorite(product.id)
+                  if (isFavorited()) {
+                    removeFavorite(product.id)
+                  } else {
+                    addFavorite(product.id)
+                  }
                 }
               }}
               className={`p-3 rounded-full shadow transition-colors ${
@@ -170,6 +162,7 @@ const isInCart = (): boolean =>
                 className="w-6 h-6"
               />
             </button>
+
             <button
               onClick={() => {
                 if (isInCart()) {

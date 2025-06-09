@@ -1,6 +1,6 @@
 // components/BottomNavbarLucideTailwind.js
 import Link from "next/link"
-import { Home, Search, Send, User, Heart } from "lucide-react"
+import { Home, Search, User, Heart } from "lucide-react"
 
 interface BottomNavbarProps {
   activePath: string

@@ -9,7 +9,6 @@ import {
   User, // Import User type
   signOut // Import signOut
 } from "firebase/auth"
-import { useRouter } from "next/navigation"
 import { FcGoogle } from "react-icons/fc"
 import { FaUserCircle } from "react-icons/fa" // For a user icon
 
@@ -17,7 +16,6 @@ import { FaUserCircle } from "react-icons/fa" // For a user icon
 import { auth } from "@/lib/firebase" // Adjust this path to your actual Firebase config file
 
 const AccountPage: React.FC = () => {
-  const router = useRouter()
   // Use null for user initially to signify no user logged in
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
@@ -36,9 +34,14 @@ const AccountPage: React.FC = () => {
     try {
       await signInWithPopup(auth, provider)
       // The onAuthStateChanged listener will update the 'user' state
-    } catch (error: any) {
-      console.error("Error signing in with Google:", error.message)
-      alert(`Error signing in: ${error.message}`)
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Error signing in with Google:", error.message)
+        alert(`Error signing in: ${error.message}`)
+      } else {
+        console.error("Error signing in with Google:", error)
+        alert("Error signing in. Please try again.")
+      }
     }
   }
 
@@ -46,9 +49,14 @@ const AccountPage: React.FC = () => {
     try {
       await signOut(auth)
       // The onAuthStateChanged listener will update the 'user' state to null
-    } catch (error: any) {
-      console.error("Error signing out:", error.message)
-      alert(`Error signing out: ${error.message}`)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error signing out:", error.message)
+        alert(`Error signing out: ${error.message}`)
+      } else {
+        console.error("Unexpected error signing out:", error)
+        alert("An unknown error occurred during sign out.")
+      }
     }
   }
 
@@ -72,7 +80,7 @@ const AccountPage: React.FC = () => {
             Welcome, {user.displayName || "User"}!
           </h1>
           <p className="text-lg text-gray-600 mb-6">
-            You're signed in with {user.email}.
+            You&apos;re signed in with {user.email}.
           </p>
           <button
             onClick={handleSignOut}
@@ -85,13 +93,11 @@ const AccountPage: React.FC = () => {
         // User is not signed in: Show Login Screen
         <>
           <div className="bg-white rounded-3xl shadow-xl p-10  max-w-md w-full">
-            <h1 className="text-4xl font-bold mb-4 text-gray-800">
-              Welcome!
-            </h1>
+            <h1 className="text-4xl font-bold mb-4 text-gray-800">Welcome!</h1>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
               Sign in or create an account to continue.
               <br />
-              It's quick and easy with Google!
+              It&apos;s quick and easy with Google!
             </p>
             <button
               onClick={handleGoogleSignIn}

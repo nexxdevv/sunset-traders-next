@@ -25,8 +25,7 @@ export default function ProductFullScreenView({
   products,
   selectedCategory
 }: ProductFullScreenViewProps) {
-  const { favorites, addFavorite, removeFavorite, isAuthenticated } =
-    useUserStore()
+  const { favorites, addFavorite, removeFavorite } = useUserStore()
   const { cartItems, addToCart, removeItem } = useCartStore()
 
   const isInCart = (id: string) =>
@@ -35,11 +34,16 @@ export default function ProductFullScreenView({
   const isFavorited = (id: string) => favorites.includes(id)
 
   const handleFavoriteToggle = (productId: string) => {
-    // if (!isAuthenticated) {
+    // if (!isAuthenticated()) {
     //   alert("Please log in to favorite items!")
     //   return
     // }
-    isFavorited(productId) ? removeFavorite(productId) : addFavorite(productId)
+
+    if (isFavorited(productId)) {
+      removeFavorite(productId)
+    } else {
+      addFavorite(productId)
+    }
   }
 
   const handleAddToCart = (product: Product) => {
