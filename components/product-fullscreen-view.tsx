@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Heart, ShoppingCart } from "lucide-react"
 import { useUserStore } from "@/stores/userStore"
 import { useCartStore } from "@/stores/cartStore"
+import Link from "next/link"
 
 interface Product {
   id: string
@@ -72,31 +73,37 @@ export default function ProductFullScreenView({
           key={product.id}
           className="relative w-full h-screen snap-start bg-black overflow-hidden"
         >
-          {/* Fullscreen Image */}
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-cover w-full h-full"
-            priority
-          />
+          {/* Clickable Link Wrapper only around Image + Details */}
+          <Link href={`/shop/${product.id}`} passHref>
+            <div className="absolute inset-0 z-0">
+              {/* Fullscreen Image */}
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                className="object-cover w-full h-full"
+                priority
+              />
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/10" />
+              {/* Product Details Fixed to Bottom */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-white bg-gradient-to-t from-black/70 to-transparent">
+                <h2 className="font-semibold text-[1.1rem] leading-tight">
+                  {product.name}
+                </h2>
+                <p className="font-semibold leading-tight">${product.price}</p>
+                <p className="mt-1">{product.description}</p>
+              </div>
+            </div>
+          </Link>
 
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-black/10" />
-
-          {/* Product Details Fixed to Bottom */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 text-white bg-gradient-to-t from-black/70 to-transparent">
-            <h2 className="font-semibold text-[1.1rem] leading-tight">
-              {product.name}
-            </h2>
-            <p className="font-semibold leading-tight">${product.price}</p>
-            <p className=" mt-1">{product.description}</p>
-          </div>
-
-          {/* Floating Buttons */}
+          {/* Floating Buttons (Not inside Link) */}
           <div className="absolute top-1/2 -translate-y-1/2 right-3 flex flex-col items-center justify-center space-y-4 z-10">
             <button
-              onClick={() => handleFavoriteToggle(product.id)}
+              onClick={(e) => {
+                e.stopPropagation()
+                handleFavoriteToggle(product.id)
+              }}
               className={`p-3 rounded-full shadow-lg transition-colors ${
                 isFavorited(product.id)
                   ? "bg-red-500 text-white"
@@ -108,8 +115,12 @@ export default function ProductFullScreenView({
                 fill={isFavorited(product.id) ? "currentColor" : "none"}
               />
             </button>
+
             <button
-              onClick={() => handleAddToCart(product)}
+              onClick={(e) => {
+                e.stopPropagation()
+                handleAddToCart(product)
+              }}
               className="p-3 rounded-full bg-white text-gray-700 relative shadow-lg"
             >
               <ShoppingCart className="w-5 h-5" />

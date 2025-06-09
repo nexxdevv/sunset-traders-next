@@ -9,6 +9,7 @@ import { products } from "@/data/products"
 import { useUserStore } from "@/stores/userStore"
 import { useCartStore } from "@/stores/cartStore"
 import { Product } from "@/types/product"
+import { useSwipeable } from "react-swipeable"
 
 interface ProductDetailPageProps {
   params: Promise<{ id: string }>
@@ -28,6 +29,12 @@ export default function ProductDetailPage({
   const [product, setProduct] = useState<Product | null>(null)
   const [currentCarouselImageIndex, setCurrentCarouselImageIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => handleNext(),
+    onSwipedRight: () => handlePrev(),
+    trackMouse: true // optional: enables swipe with mouse drag for testing
+  })
 
   useEffect(() => {
     const found = products.find((p) => p.id === params.id)
@@ -83,10 +90,10 @@ export default function ProductDetailPage({
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 text-gray-800">
       {/* Top Bar */}
-      <div className="sticky top-0 flex items-center justify-between p-4 bg-white/90 backdrop-blur shadow">
+      <div className="fixed top-0 flex items-center right-0 z-10 w-full justify-between p-3">
         <button
           onClick={() => router.back()}
-          className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+          className="ml-3 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
@@ -96,46 +103,76 @@ export default function ProductDetailPage({
         <div style={{ width: "2rem" }} />
       </div>
 
-      {/* Carousel */}
-      <div className="relative w-full h-[40vh] flex items-center justify-center bg-gray-200 overflow-hidden">
-        <div className="absolute inset-0 cursor-pointer" onClick={openModal}>
+      {/* Main Carousel */}
+      <div className="w-full p-3 flex flex-col gap-2">
+        {/* Main Image */}
+        <div
+          {...swipeHandlers}
+          className="relative w-full h-[50vh] rounded-xl overflow-hidden bg-gray-200 cursor-pointer"
+          onClick={openModal}
+        >
           <Image
             src={imageList[currentCarouselImageIndex]}
-            fill
             alt={`${product.name} image`}
-            className="object-cover"
+            fill
+            className="object-cover transition-all duration-300"
             priority
           />
+          {imageList.length > 1 && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handlePrev(e)
+                }}
+                className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/70 rounded-full shadow hover:bg-white"
+              >
+                <ChevronLeft className="w-6 h-6 text-gray-700" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  handleNext(e)
+                }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/70 rounded-full shadow hover:bg-white"
+              >
+                <ChevronRight className="w-6 h-6 text-gray-700" />
+              </button>
+            </>
+          )}
         </div>
 
+        {/* Thumbnail Scroll Row */}
         {imageList.length > 1 && (
-          <>
-            <button
-              onClick={handlePrev}
-              className="absolute left-2 p-2 bg-white/70 rounded-full shadow hover:bg-white"
-              aria-label="Previous image"
-            >
-              <ChevronLeft className="w-6 h-6 text-gray-700" />
-            </button>
-            <button
-              onClick={handleNext}
-              className="absolute right-2 p-2 bg-white/70 rounded-full shadow hover:bg-white"
-              aria-label="Next image"
-            >
-              <ChevronRight className="w-6 h-6 text-gray-700" />
-            </button>
-          </>
+          <div className="flex overflow-x-auto gap-2 px-1">
+            {imageList.map((img, idx) => (
+              <div
+                key={idx}
+                onClick={() => setCurrentCarouselImageIndex(idx)}
+                className={`relative min-w-[4rem] w-20 aspect-square rounded-lg overflow-hidden border-2 cursor-pointer transition-all ${
+                  idx === currentCarouselImageIndex
+                    ? "border-blue-500"
+                    : "border-transparent"
+                }`}
+              >
+                <Image
+                  src={img}
+                  alt={`Thumbnail ${idx + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
         )}
       </div>
 
       {/* Details */}
-      <div className="p-6 bg-white rounded-t-3xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
+      <div className="p-4 bg-white rounded-t-3xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
         <div className="flex justify-between items-center mb-4">
           <div>
-            <h2 className="text-3xl font-bold">{product.name}</h2>
-            <p className="text-2xl font-semibold text-blue-600">
-              ${product.price}
-            </p>
+            <h2 className="text-[1.1rem] font-semibold">{product.name}</h2>
+            <p className="font-semibold">${product.price}</p>
           </div>
           <div className="flex space-x-4">
             <button
@@ -175,7 +212,7 @@ export default function ProductDetailPage({
               className={`p-3 rounded-full shadow ${
                 isInCart()
                   ? "bg-green-500 text-white"
-                  : "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-yellow-400 text-white hover:bg-yellow-700"
               }`}
             >
               <ShoppingCart className="w-6 h-6" />
@@ -187,7 +224,6 @@ export default function ProductDetailPage({
             </button>
           </div>
         </div>
-        <h3 className="text-xl font-semibold mb-2">Description</h3>
         <p className="text-gray-700">{product.description}</p>
       </div>
 
