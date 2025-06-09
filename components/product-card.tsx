@@ -3,7 +3,6 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { Heart, ShoppingCart } from "lucide-react"
 import { ProductActions } from "@/components/product-actions"
 import { Product } from "@/types/product"
 
@@ -23,12 +22,12 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         tabIndex={0}
         role="link"
       >
-        <div className="absolute top-2 left-2 right-2 z-10 flex justify-center gap-3 px-2">
+        <div className="absolute top-2 left-2 right-2 z-10 flex  gap-3 px-2">
           <ProductActions product={product} />
         </div>
 
         <Image
-          src={product.image}
+          src={product.imageUrl || "/placeholder.png"}
           alt={product.name}
           width={200}
           height={200}

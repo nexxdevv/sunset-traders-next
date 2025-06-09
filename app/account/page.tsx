@@ -14,6 +14,7 @@ import { FaUserCircle } from "react-icons/fa" // For a user icon
 
 // Assuming your firebase config is set up and exported from this path
 import { auth } from "@/lib/firebase" // Adjust this path to your actual Firebase config file
+import Image from "next/image"
 
 const AccountPage: React.FC = () => {
   // Use null for user initially to signify no user logged in
@@ -75,12 +76,18 @@ const AccountPage: React.FC = () => {
       {user ? (
         // User is signed in: Show Dashboard
         <div className="bg-white rounded-3xl shadow-xl p-10  max-w-md w-full">
-          <FaUserCircle className="mx-auto text-blue-600 mb-4" size={60} />
+          <Image
+            src={user.photoURL || ""}
+            alt={user.displayName || "User"}
+            width={200}
+            height={200}
+            className="w-20 h-20 rounded-full mx-auto mb-4"
+          />
           <h1 className="text-3xl font-bold mb-2 text-gray-800">
-            Welcome, {user.displayName || "User"}!
+            {user.displayName || "User"}
           </h1>
           <p className="text-lg text-gray-600 mb-6">
-            You&apos;re signed in with {user.email}.
+            {user.email}.
           </p>
           <button
             onClick={handleSignOut}

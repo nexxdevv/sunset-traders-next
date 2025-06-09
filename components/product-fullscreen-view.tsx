@@ -2,7 +2,6 @@
 
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { Heart, ShoppingCart } from "lucide-react"
 import Link from "next/link"
 import { ProductActions } from "./product-actions"
 
@@ -44,7 +43,7 @@ export default function ProductFullScreenView({
             <div className="absolute inset-0 z-0">
               {/* Fullscreen Image */}
               <Image
-                src={product.image}
+                src={product.imageUrl}
                 alt={product.name}
                 fill
                 className="object-cover w-full h-full"

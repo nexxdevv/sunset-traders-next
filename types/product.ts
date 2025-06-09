@@ -3,8 +3,9 @@ export type Product = {
   name: string
   price: string
   description: string
-  image: string
+  imageUrl: string
   category: string
   dateAdded: string
   carouselImages?: string[]
+  tags?: string[]
 }

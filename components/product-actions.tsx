@@ -10,7 +10,7 @@ interface ProductActionsProps {
     id: string
     name: string
     price: string
-    image: string
+    imageUrl: string
     description: string
   }
   direction?: "row" | "col" // default to "row"
@@ -28,7 +28,7 @@ export function ProductActions({
     id: string
     name: string
     price: string
-    image: string
+    imageUrl: string
     description: string
   }
 
@@ -76,7 +76,8 @@ export function ProductActions({
       <button
         onClick={handleAddToCart}
         className={`p-3 rounded-full shadow bg-white text-gray-700 relative ${
-          isInCart ? "bg-yellow-400" : "hover:bg-gray-100"}`}
+          isInCart ? "bg-yellow-400" : "hover:bg-gray-100"
+        }`}
       >
         <ShoppingCart className="w-5 h-5" />
       </button>

@@ -9,6 +9,7 @@ import { products } from "@/data/products"
 import { Product } from "@/types/product"
 import { useSwipeable } from "react-swipeable"
 import { ProductActions } from "@/components/product-actions"
+import { motion } from "framer-motion"
 
 interface ProductDetailPageProps {
   params: Promise<{ id: string }>
@@ -19,7 +20,6 @@ export default function ProductDetailPage({
 }: ProductDetailPageProps) {
   const params = use(paramsPromise)
   const router = useRouter()
-  
 
   const [product, setProduct] = useState<Product | null>(null)
   const [currentCarouselImageIndex, setCurrentCarouselImageIndex] = useState(0)
@@ -49,12 +49,11 @@ export default function ProductDetailPage({
     )
   }
 
-  
   const hasCarouselImages = (product.carouselImages ?? []).length > 0
 
   const imageList = hasCarouselImages
-    ? [product.image, ...(product.carouselImages ?? [])]
-    : [product.image]
+    ? [product.imageUrl, ...(product.carouselImages ?? [])]
+    : [product.imageUrl]
 
   const handleNext = (e?: React.MouseEvent) => {
     e?.stopPropagation()
@@ -74,7 +73,13 @@ export default function ProductDetailPage({
   const closeModal = () => setIsModalOpen(false)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 text-gray-800">
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="min-h-screen text-gray-800"
+    >
       {/* Top Bar */}
       <div className="fixed top-3 flex items-center right-0 z-10 w-full justify-between p-3">
         <button
@@ -154,8 +159,8 @@ export default function ProductDetailPage({
       </div>
 
       {/* Details */}
-      <div className="p-4 bg-white rounded-t-3xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
-        <div className="flex justify-between items-center mb-4">
+      <div className="p-4 bg-[#2C2C2C] rounded-t-3xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
+        <div className="flex justify-between text-white items-center mb-4">
           <div>
             <h2 className="text-[1.1rem] font-semibold">{product.name}</h2>
             <p className="font-semibold">${product.price}</p>
@@ -164,7 +169,7 @@ export default function ProductDetailPage({
             <ProductActions product={product} />
           </div>
         </div>
-        <p className="text-gray-700">{product.description}</p>
+        <p className="text-white">{product.description}</p>
       </div>
 
       {/* Fullscreen Modal */}
@@ -217,6 +222,6 @@ export default function ProductDetailPage({
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
