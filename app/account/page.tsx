@@ -55,7 +55,7 @@ const AccountPage: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center p-4 bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 font-sans text-gray-800">
-        <div className="bg-white rounded-3xl shadow-xl p-10 max-w-md w-full animate-pulse text-center">
+        <div className="bg-white rounded-3xl shadow-xl p-10 max-w-md w-full animate-pulse ">
           <p className="text-xl text-gray-600">Checking authentication...</p>
         </div>
       </div>
@@ -66,7 +66,7 @@ const AccountPage: React.FC = () => {
     <div className="min-h-screen flex flex-col justify-center items-center p-4 bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 font-sans text-gray-800">
       {user ? (
         // User is signed in: Show Dashboard
-        <div className="bg-white rounded-3xl shadow-xl p-10 text-center max-w-md w-full">
+        <div className="bg-white rounded-3xl shadow-xl p-10  max-w-md w-full">
           <FaUserCircle className="mx-auto text-blue-600 mb-4" size={60} />
           <h1 className="text-3xl font-bold mb-2 text-gray-800">
             Welcome, {user.displayName || "User"}!
@@ -84,7 +84,7 @@ const AccountPage: React.FC = () => {
       ) : (
         // User is not signed in: Show Login Screen
         <>
-          <div className="bg-white rounded-3xl shadow-xl p-10 text-center max-w-md w-full">
+          <div className="bg-white rounded-3xl shadow-xl p-10  max-w-md w-full">
             <h1 className="text-4xl font-bold mb-4 text-gray-800">
               Welcome!
             </h1>
@@ -102,7 +102,7 @@ const AccountPage: React.FC = () => {
             </button>
           </div>
           <footer className="mt-8">
-            <p className="text-sm text-gray-600 text-center">
+            <p className="text-sm text-gray-600 ">
               By signing in, you agree to our{" "}
               <a href="/terms" className="text-blue-600 hover:underline">
                 Terms of Service

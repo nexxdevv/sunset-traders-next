@@ -27,23 +27,24 @@ export default function ProductFullScreenView({
 }: ProductFullScreenViewProps) {
   const { favorites, addFavorite, removeFavorite, isAuthenticated } =
     useUserStore()
-  const { cartItems, addToCart } = useCartStore()
+  const { cartItems, addToCart, removeItem } = useCartStore()
 
-  const isFavorited = (id: string) => favorites.includes(id)
   const isInCart = (id: string) =>
     cartItems.some((item: { id: string }) => item.id === id)
 
+  const isFavorited = (id: string) => favorites.includes(id)
+
   const handleFavoriteToggle = (productId: string) => {
-    if (!isAuthenticated) {
-      alert("Please log in to favorite items!")
-      return
-    }
+    // if (!isAuthenticated) {
+    //   alert("Please log in to favorite items!")
+    //   return
+    // }
     isFavorited(productId) ? removeFavorite(productId) : addFavorite(productId)
   }
 
   const handleAddToCart = (product: Product) => {
     if (isInCart(product.id)) {
-      alert("Already in cart!")
+      removeItem(product.id)
       return
     }
     addToCart(product)

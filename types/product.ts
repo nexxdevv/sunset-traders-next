@@ -6,4 +6,5 @@ export type Product = {
   image: string
   category: string
   dateAdded: string
+  carouselImages?: string[]
 }

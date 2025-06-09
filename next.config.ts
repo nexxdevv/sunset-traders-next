@@ -18,7 +18,25 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "tailwindui.com",
+        hostname: "i.pcmag.com",
+        port: "",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "platform.theverge.com",
+        port: "",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+        port: "",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
         port: "",
         pathname: "/**"
       }

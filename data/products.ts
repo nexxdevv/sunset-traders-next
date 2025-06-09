@@ -20,7 +20,11 @@ export const products: Product[] = [
       "Wireless earbuds with noise cancellation. Perfect for music lovers.",
     image: "/airpods.png",
     category: "electronics",
-    dateAdded: "2025-06-03"
+    dateAdded: "2025-06-03",
+    carouselImages: [
+      "https://i.pcmag.com/imagery/reviews/04OxokBPa0Tout5RYZ5W8NI-1.fit_lim.size_1050x591.v1726161238.jpg",
+      "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25623448/DSCF0028.jpg?quality=90&strip=all&crop=22.5%2C5.1470588235294%2C60.196078431373%2C90.294117647059&w=2400"
+    ]
   },
   {
     id: "4",

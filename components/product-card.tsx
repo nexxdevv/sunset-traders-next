@@ -38,10 +38,10 @@ export default function ProductCard({ product, index }: ProductCardProps) {
     e.preventDefault()
     e.stopPropagation()
 
-    if (!isAuthenticated) {
-      alert("Please log in to favorite items!")
-      return
-    }
+    // if (!isAuthenticated) {
+    //   alert("Please log in to favorite items!")
+    //   return
+    // }
 
     if (isFavorited) {
       removeFavorite(product.id)
@@ -57,9 +57,9 @@ export default function ProductCard({ product, index }: ProductCardProps) {
       removeItem(product.id)
       return
     }
-    if (!isAuthenticated) {
-      return
-    }
+    // if (!isAuthenticated) {
+    //   return
+    // }
     addToCart(product)
   }
 
