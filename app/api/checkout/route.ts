@@ -6,6 +6,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-05-28.basil"
 })
 
+type LineItem = {
+  name: string
+  image: string
+  description: string
+  quantity: number
+  amount_total: number
+  price?: {
+    product?: {
+      images?: string[]
+    }
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
@@ -19,14 +32,16 @@ export async function POST(req: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      line_items: items.map((item: any) => ({
+      line_items: items.map((item: LineItem) => ({
         price_data: {
           currency: "usd",
           product_data: {
             name: item.name,
             images: [item.image]
           },
-          unit_amount: Math.round(item.price * 100)
+          unit_amount: Math.round(
+            (typeof item.price === "number" ? item.price : 0) * 100
+          )
         },
         quantity: 1
       })),
@@ -37,7 +52,7 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({ sessionId: session.id })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Stripe session creation error:", error)
     return NextResponse.json(
       { error: "Internal Server Error" },

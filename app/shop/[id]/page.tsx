@@ -4,7 +4,7 @@
 import React, { useState, useEffect, use } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { ChevronLeft, ChevronRight, Heart, ShoppingCart, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { products } from "@/data/products"
 import { Product } from "@/types/product"
 import { useSwipeable } from "react-swipeable"

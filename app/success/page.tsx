@@ -4,12 +4,21 @@ import { useEffect, useState } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { db } from "@/lib/firebase"
 import { collection, addDoc } from "firebase/firestore"
-import { useUserStore } from "@/stores/userStore"
+
+type LineItem = {
+  description: string
+  quantity: number
+  amount_total: number
+  price?: {
+    product?: {
+      images?: string[]
+    }
+  }
+}
 
 export default function SuccessPage() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get("session_id")
-  const { user } = useUserStore()
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [orderSavedSuccessfully, setOrderSavedSuccessfully] = useState(false)
@@ -32,7 +41,7 @@ export default function SuccessPage() {
           total: session.amount_total / 100,
           customer: session.customer_details.name,
           email: session.customer_details.email,
-          items: session.line_items.data.map((item: any) => ({
+          items: session.line_items.data.map((item: LineItem) => ({
             name: item.description,
             quantity: item.quantity,
             price: item.amount_total / 100,

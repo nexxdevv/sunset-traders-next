@@ -3,7 +3,6 @@
 import { Heart, ShoppingCart } from "lucide-react"
 import { useUserStore } from "@/stores/userStore"
 import { useCartStore } from "@/stores/cartStore"
-import { Product } from "@/types/product"
 
 interface ProductActionsProps {
   product: {
