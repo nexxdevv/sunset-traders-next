@@ -14,11 +14,13 @@ interface ProductActionsProps {
     description: string
   }
   direction?: "row" | "col" // default to "row"
+  size?: "sm" | "md" // optional size prop for button scaling
 }
 
 export function ProductActions({
   product,
-  direction = "row"
+  direction = "row",
+  size = "md" // default size is "md"
 }: ProductActionsProps) {
   const { favorites, addFavorite, removeFavorite } = useUserStore()
   const { cartItems, addToCart, removeItem } = useCartStore()
@@ -65,8 +67,8 @@ export function ProductActions({
       <button
         onClick={handleFavoriteToggle}
         className={`p-3 rounded-full shadow-md ${
-          isFavorited ? "bg-red-500 text-white" : "bg-white text-gray-700"
-        }`}
+          size === "sm" && "scale-[83%]"
+        } ${isFavorited ? "bg-red-500 text-white" : "bg-white text-gray-700"}`}
       >
         <Heart
           className="w-5 h-5"
@@ -76,8 +78,8 @@ export function ProductActions({
       <button
         onClick={handleAddToCart}
         className={`p-3 rounded-full shadow bg-white text-gray-700 relative ${
-          isInCart ? "bg-yellow-400" : "hover:bg-gray-100"
-        }`}
+          size === "sm" && "scale-[83%]"
+        } ${isInCart ? "bg-yellow-400" : "hover:bg-gray-100"}`}
       >
         <ShoppingCart className="w-5 h-5" />
       </button>

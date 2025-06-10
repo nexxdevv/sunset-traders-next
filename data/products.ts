@@ -50,9 +50,9 @@ export const products: Product[] = [
   },
   {
     id: "7",
-    name: "Ray-Ban Aviators",
+    name: "Ray-Ban Wayfarers",
     price: "45",
-    description: "Classic Ray-Ban aviator sunglasses. Minor scratches on lens.",
+    description: "Classic Ray-Ban Wayfarer sunglasses. Minor scratches on lens.",
     imageUrl:
       "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=600&fit=crop&crop=center",
     category: "sunglasses",
@@ -60,37 +60,15 @@ export const products: Product[] = [
   },
   {
     id: "8",
-    name: "Gold Chain Necklace",
+    name: "Pearl Necklace",
     price: "75",
-    description: "18k gold plated chain necklace. Perfect for layering.",
+    description: "Elegant pearl necklace in pristine condition. Perfect for special occasions.",
     imageUrl:
       "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=600&fit=crop&crop=center",
     category: "jewelry",
     dateAdded: "2025-06-08"
   },
 
-  {
-    id: "10",
-    name: "Adidas Originals",
-    price: "70",
-    description:
-      "Retro Adidas sneakers in mint condition. Classic three stripes design.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=600&fit=crop&crop=center",
-    category: "sneakers",
-    dateAdded: "2025-06-09"
-  },
-  {
-    id: "11",
-    name: "Vintage Band T-Shirt",
-    price: "35",
-    description:
-      "Authentic vintage band t-shirt with original graphics. Soft cotton blend.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=600&fit=crop&crop=center",
-    category: "shirts",
-    dateAdded: "2025-06-10"
-  },
   {
     id: "12",
     name: "High-Waisted Jeans",
@@ -114,22 +92,11 @@ export const products: Product[] = [
     dateAdded: "2025-05-12"
   },
   {
-    id: "14",
-    name: "Silk Scarf",
-    price: "30",
-    description:
-      "Luxurious silk scarf with beautiful pattern. Perfect accessory piece.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=400&h=600&fit=crop&crop=center",
-    category: "accessories",
-    dateAdded: "2025-05-12"
-  },
-  {
     id: "15",
     name: "Vintage Bomber Jacket",
     price: "110",
     description:
-      "Classic bomber jacket in olive green. Military-inspired design.",
+      "Classic bomber jacket. Military-inspired design.",
     imageUrl:
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=600&fit=crop&crop=center",
     category: "jackets",
@@ -140,7 +107,7 @@ export const products: Product[] = [
     name: "Converse Chuck Taylor",
     price: "40",
     description:
-      "Classic Converse All Star sneakers in black. Timeless design.",
+      "Classic Converse All Star sneakers. Timeless design.",
     imageUrl:
       "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=400&h=600&fit=crop&crop=center",
     category: "sneakers",

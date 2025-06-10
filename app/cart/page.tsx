@@ -29,7 +29,7 @@ export default function CartPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10">
-      <h1 className="text-3xl font-bold mb-6 text-center">Your Cart</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Your Cart</h1>
 
       {cartItems.length === 0 ? (
         <p className="text-center text-gray-500 text-lg">
@@ -55,7 +55,7 @@ export default function CartPage() {
                   className="rounded-lg object-cover w-20 h-20"
                 />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-lg">{item.name}</h3>
+                  <h3 className="font-semibold text-sm leading-tight">{item.name}</h3>
                   <p className="text-gray-500 text-sm">
                     ${item.price}
                   </p>

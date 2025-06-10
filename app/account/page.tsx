@@ -71,8 +71,8 @@ const AccountPage: React.FC = () => {
         )
         const querySnapshot = await getDocs(q)
         const fetchedOrders: Order[] = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...(doc.data() as Order)
+          ...(doc.data() as Omit<Order, "id">),
+          id: doc.id
         }))
         setOrders(fetchedOrders)
       }
@@ -132,10 +132,10 @@ const AccountPage: React.FC = () => {
               height={80}
               className="w-20 h-20 rounded-full mx-auto mb-4"
             />
-            <h1 className="text-3xl font-bold text-gray-800 mb-1">
+            <h1 className=" font-bold text-gray-800 mb-1">
               {user.displayName || "User"}
             </h1>
-            <p className="text-lg text-gray-600">{user.email}</p>
+            <p className=" text-gray-600">{user.email}</p>
             <button
               onClick={handleSignOut}
               className="mt-4 inline-flex items-center justify-center bg-red-500 text-white font-semibold py-2 px-5 rounded-full shadow-md hover:bg-red-600 transition"
