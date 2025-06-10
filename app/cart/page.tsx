@@ -10,8 +10,9 @@ export default function CartPage() {
   interface CartItem {
     id: string
     name: string
-    price: string
+    price: number
     imageUrl: string
+    quantity: number
   }
 
   interface CartStore {
@@ -22,7 +23,7 @@ export default function CartPage() {
   const { cartItems, removeItem }: CartStore = useCartStore()
 
   const total: number = cartItems.reduce(
-    (sum: number, item: CartItem) => sum + parseFloat(item.price),
+    (sum: number, item: CartItem) => sum + item.price,
     0
   )
 
@@ -55,7 +56,9 @@ export default function CartPage() {
                 />
                 <div className="flex-1">
                   <h3 className="font-semibold text-lg">{item.name}</h3>
-                  <p className="text-gray-500 text-sm">${item.price}</p>
+                  <p className="text-gray-500 text-sm">
+                    ${item.price}
+                  </p>
                 </div>
                 <Button
                   variant="outline"
@@ -77,7 +80,7 @@ export default function CartPage() {
             </div>
             <div className="flex justify-between mb-4">
               <span>Total:</span>
-              <span className="font-bold">${total.toFixed(2)}</span>
+              <span className="font-bold">${Number(total)}</span>
             </div>
             <CheckoutButton cartItems={cartItems} />
           </div>
