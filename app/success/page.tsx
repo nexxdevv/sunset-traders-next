@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { db } from "@/lib/firebase"
 import { collection, addDoc } from "firebase/firestore"
 
@@ -17,18 +17,19 @@ type LineItem = {
 }
 
 export default function SuccessPage() {
-  const searchParams = useSearchParams()
-  const sessionId = searchParams.get("session_id")
+  const [sessionId, setSessionId] = useState<string | null>(null)
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [orderSavedSuccessfully, setOrderSavedSuccessfully] = useState(false)
 
   useEffect(() => {
-    if (!sessionId) {
-      setLoading(false)
-      console.error("No sessionId found in URL.")
-      return
-    }
+    const params = new URLSearchParams(window.location.search)
+    const id = params.get("session_id")
+    setSessionId(id)
+  }, [])
+
+  useEffect(() => {
+    if (!sessionId) return
 
     const fetchAndSaveOrder = async () => {
       try {
@@ -45,12 +46,12 @@ export default function SuccessPage() {
             name: item.description,
             quantity: item.quantity,
             price: item.amount_total / 100,
-            image: item.price?.product?.images?.[0] || "/placeholder-product.jpg"
+            image:
+              item.price?.product?.images?.[0] || "/placeholder-product.jpg"
           })),
           date: new Date().toISOString()
         }
 
-        // Save to "orders" collection
         await addDoc(collection(db, "orders"), order)
 
         setOrderSavedSuccessfully(true)
