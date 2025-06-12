@@ -3,7 +3,7 @@
 
 import { useUserStore } from "@/stores/userStore"
 import { products } from "@/data/products"
-import ProductCard from "@/components/product-card"
+import ProductCard from "@/components/product-card/product-card-grid"
 
 export default function LikesPage() {
   const { favorites } = useUserStore()

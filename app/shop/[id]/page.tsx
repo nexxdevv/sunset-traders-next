@@ -4,12 +4,15 @@
 import React, { useState, useEffect, use } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, ShareIcon, X } from "lucide-react"
 import { products } from "@/data/products"
 import { Product } from "@/types/product"
 import { useSwipeable } from "react-swipeable"
-import { ProductActions } from "@/components/product-actions"
+
 import { motion } from "framer-motion"
+import { Heart as HeartIcon, ShoppingCart, Bookmark } from "lucide-react"
+import { useCartStore } from "@/stores/cartStore"
+import { useUserStore } from "@/stores/userStore"
 
 interface ProductDetailPageProps {
   params: Promise<{ id: string }>
@@ -24,6 +27,9 @@ export default function ProductDetailPage({
   const [product, setProduct] = useState<Product | null>(null)
   const [currentCarouselImageIndex, setCurrentCarouselImageIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const { addToCart, removeItem, cartItems } = useCartStore()
+  const { savedProducts, addSavedProduct, removeSavedProduct } = useUserStore()
 
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => handleNext(),
@@ -69,6 +75,20 @@ export default function ProductDetailPage({
     )
   }
 
+  const isInCart: boolean = cartItems.some(
+    (item: Product) => item.id === product.id
+  )
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (isInCart) {
+      removeItem(product.id)
+    } else {
+      addToCart(product)
+    }
+  }
+
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
 
@@ -78,16 +98,16 @@ export default function ProductDetailPage({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen text-gray-800 pt-[78px]"
+      className="min-h-screen text-gray-800 pt-[70px]"
     >
       {/* Top Bar */}
 
       {/* Main Carousel */}
-      <div className="w-full p-3 flex flex-col gap-2">
+      <div className="w-full  flex flex-col gap-2">
         {/* Main Image */}
         <div
           {...swipeHandlers}
-          className="relative w-full h-[50vh] rounded-md overflow-hidden bg-gray-200 cursor-pointer"
+          className="relative w-full h-[50vh] overflow-hidden bg-gray-200 cursor-pointer"
           onClick={openModal}
         >
           <Image
@@ -147,17 +167,67 @@ export default function ProductDetailPage({
       </div>
 
       {/* Details */}
-      <div className="p-4 bg-[#2C2C2C] rounded-t-xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
-        <div className="flex justify-between text-white items-center mb-4">
+      <div className="p-3 dark:bg-dark rounded-t-xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
+        <div className="flex flex-col-reverse gap-4 justify-between   mb-4">
           <div>
-            <h2 className="text-2xl font-semibold">{product.name}</h2>
-            <p className="text-xl font-semibold">${product.price}</p>
+            <h2 className="text-2xl font-semibold leading-tight">
+              {product.name}
+            </h2>
+            <h2 className="text-xl font-semibold leading-tight">
+              {product?.subtitle}
+            </h2>
+            <div className="flex items-center mt-2 w-full ">
+              <p className="text-2xl mt-1 font-semibold">${product.price}</p>
+              {product?.ogPrice && (
+                <div className="bg-red-300 ml-2">
+                  <p className="text-lg mt-1 scale-[0.85] font-semibold">
+                    ${product?.ogPrice} <span className="text-xs">MSRP</span>
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="flex space-x-4">
-            <ProductActions product={{ ...product, price: String(product.price) }} />
+          <div className="flex gap-1 text-gray-800">
+            <button
+              onClick={() => {
+                if (savedProducts.includes(product.id)) {
+                  removeSavedProduct(product.id)
+                } else {
+                  addSavedProduct(product.id)
+                }
+              }}
+              type="button"
+              className={`${
+                savedProducts.includes(product.id) && "fill-red-500"
+              } border px-2 py-1.5 flex cursor-pointer items-center justify-center font-500] gap-2 flex-1 bg-white"`}
+            >
+              <HeartIcon
+                size={22}
+                className={
+                  savedProducts.includes(product.id)
+                    ? "text-red-500 fill-red-500"
+                    : ""
+                }
+              />
+              <span>
+                {savedProducts.includes(product.id) ? "Saved" : "Save"}
+              </span>
+            </button>
+            <button
+              onClick={handleAddToCart}
+              type="button"
+              className={`border  px-2 py-1.5 flex items-center justify-center gap-2 flex-1  cursor-pointer whitespace-nowrap font-[500] ${
+                isInCart
+                  ? "bg-merchant-accent border-merchant-accent text-white"
+                  : " text-gray-800"
+              }`}
+            >
+              <ShoppingCart size={22} />
+              <span>{isInCart ? "In the cart" : "Add to cart"}</span>
+            </button>
           </div>
         </div>
-        <p className="text-white">{product.description}</p>
+        <p className="text-[18px] leading-snug">{product.description}</p>
       </div>
 
       {/* Fullscreen Modal */}

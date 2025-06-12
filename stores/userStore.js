@@ -2,32 +2,36 @@
 import { create } from "zustand"
 import { persist, createJSONStorage } from "zustand/middleware"
 
+
+
 export const useUserStore = create(
   persist(
     (set) => ({
       user: null, // Firebase user object
       isAuthenticated: false, // Initial state
-      favorites: [], // Array of favorite product IDs
+      savedProducts: [], 
 
-      // This action correctly updates isAuthenticated based on userData presence
       setUser: (userData) =>
         set({ user: userData, isAuthenticated: !!userData }),
-      addFavorite: (productId) =>
-        set((state) => ({ favorites: [...state.favorites, productId] })),
-      removeFavorite: (productId) =>
+      addSavedProduct: (productId) =>
         set((state) => ({
-          favorites: state.favorites.filter((id) => id !== productId)
+          savedProducts: [...state.savedProducts, productId]
         })),
-      clearFavorites: () => set({ favorites: [] }),
-      logout: () => set({ user: null, isAuthenticated: false, favorites: [] })
+      removeSavedProduct: (productId) =>
+        set((state) => ({
+          savedProducts: state.savedProducts.filter((id) => id !== productId)
+        })),
+      clearSavedProducts: () => set({ savedProducts: [] }),
+      logout: () =>
+        set({ user: null, isAuthenticated: false, savedProducts: [] })
     }),
     {
-      name: "user-storage", // unique name
+      name: "user-storage",
       storage: createJSONStorage(() => localStorage),
-      // Include isAuthenticated in partialize so it's saved/loaded
+
       partialize: (state) => ({
-        favorites: state.favorites,
-        isAuthenticated: state.isAuthenticated // <--- ADD THIS LINE
+        savedProducts: state.savedProducts,
+        isAuthenticated: state.isAuthenticated
       })
     }
   )

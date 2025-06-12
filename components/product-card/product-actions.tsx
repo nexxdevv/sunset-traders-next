@@ -1,6 +1,6 @@
 "use client"
 
-import { Heart, ShoppingCart } from "lucide-react"
+import { Heart, ShoppingCart, Bookmark } from "lucide-react"
 import { useUserStore } from "@/stores/userStore"
 import { useCartStore } from "@/stores/cartStore"
 
@@ -14,17 +14,20 @@ interface ProductActionsProps {
   }
   direction?: "row" | "col" // default to "row"
   size?: "sm" | "md" // optional size prop for button scaling
+  showDetailsButton?: boolean
 }
 
 export function ProductActions({
   product,
   direction = "row",
-  size = "md" // default size is "md"
+  size = "md", // default size is "md",
+  showDetailsButton = false
 }: ProductActionsProps) {
-  const { favorites, addFavorite, removeFavorite } = useUserStore()
+  const { savedProducts, addSavedProduct, removeSavedProduct, f } =
+    useUserStore()
   const { cartItems, addToCart, removeItem } = useCartStore()
 
-  const isFavorited = favorites.includes(product.id)
+  const isSaved = savedProducts.includes(product.id)
   interface CartItem {
     id: string
     name: string
@@ -41,10 +44,10 @@ export function ProductActions({
     e.preventDefault()
     e.stopPropagation()
 
-    if (isFavorited) {
-      removeFavorite(product.id)
+    if (isSaved) {
+      removeSavedProduct(product.id)
     } else {
-      addFavorite(product.id)
+      addSavedProduct(product.id)
     }
   }
 
@@ -65,19 +68,21 @@ export function ProductActions({
     >
       <button
         onClick={handleFavoriteToggle}
-        className={`p-3 rounded-full shadow-md ${
+        className={`p-3 rounded-full shadow-md cursor-pointer ${
           size === "sm" && "scale-[83%]"
-        } ${isFavorited ? "bg-red-500 text-white" : "bg-white text-gray-700"}`}
+        } ${isSaved ? "bg-red-500 text-white" : "bg-white text-gray-700"}`}
       >
-        <Heart
-          className="w-5 h-5"
-        />
+        <Heart className="w-5 h-5" />
       </button>
       <button
         onClick={handleAddToCart}
-        className={`p-3 rounded-full shadow  text-gray-700 relative ${
+        className={`p-3 rounded-full shadow cursor-pointer  text-gray-700 relative ${
           size === "sm" && "scale-[83%]"
-        } ${isInCart ? "bg-[#365DB6] text-white" : "hover:bg-gray-100 bg-white"}`}
+        } ${
+          isInCart
+            ? "bg-merchant-accent text-white"
+            : "hover:bg-gray-100 bg-white"
+        }`}
       >
         <ShoppingCart className="w-5 h-5" />
       </button>

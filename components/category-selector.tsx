@@ -2,6 +2,12 @@
 
 import { useRef, useEffect } from "react"
 import { cn } from "@/lib/utils"
+import { DM_Sans } from "next/font/google"
+
+const dM_Sans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"]
+})
 
 interface CategorySelectorProps {
   categories: string[]
@@ -48,8 +54,10 @@ export default function CategorySelector({
             ref={isActive ? activeButtonRef : null}
             onClick={() => onSelectCategory(category)}
             className={cn(
-              "px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all capitalize duration-700 ease-in-out text-gray-700",
-              isActive ? "bg-[#365DB6] text-white" : "bg-gray-100   "
+              `${dM_Sans.className} px-4 py-2 rounded-full text-[15px] whitespace-nowrap transition-all capitalize duration-500 ease-in-out ring-offset-sky-500/30 ring-1 ring-inset ring-merchant/20 text-gray-700`,
+              isActive
+                ? "bg-merchant-accent text-white font-[500] shadow-sm"
+                : "bg-gray-100 text-gray-700 ring-merchant/20 font-[500]"
             )}
           >
             {category}

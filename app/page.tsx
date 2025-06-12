@@ -2,13 +2,13 @@
 
 import React, { useState } from "react"
 import CategorySelector from "@/components/category-selector"
-import { products } from "@/data/products"
 import ProductDisplay from "@/components/product-display"
+import { products } from "@/data/products"
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   return (
-    <main className="min-h-screen flex items-center justify-center scrollbar-hide">
+    <main className="min-h-screen scrollbar-hide">
       <CategorySelector
         categories={[
           "All",

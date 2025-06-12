@@ -3,8 +3,11 @@ import { Product } from "../types/product"
 export const products: Product[] = [
   {
     id: "1",
-    name: "Giorgio Armani AR8186",
-    price: 100,
+    name: "Giorgio Armani",
+    subtitle: "AR8186",
+    price: 40,
+    ogPrice: 350,
+    isOnSale: true,
     description:
       "Stylish Italian sunglasses with polarized lenses. Light weight and comfortable fit for men and women.",
     imageUrl:
@@ -15,7 +18,8 @@ export const products: Product[] = [
 
   {
     id: "3",
-    name: "Apple AirPods 5th Gen",
+    name: "Apple AirPods",
+    subtitle: "5th Gen",
     price: 30,
     description:
       "Wireless earbuds with noise cancellation. Perfect for music lovers.",

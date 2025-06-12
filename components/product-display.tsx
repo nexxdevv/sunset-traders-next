@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import ProductCard from "./product-card"
-import ProductFullScreenView from "./product-fullscreen-view"
-import { Product } from "../types/product"
-import ViewToggleButton from "./view-toggle-button"
+import ProductCard from "./product-card/product-card-grid"
+import ProductFullScreenView from "./product-card/product-fullscreen-view"
+import { Product } from "@/types/product"
+import ViewToggleButton from "./ui/view-toggle-button"
 
 type ViewMode = "grid" | "fullscreen"
 
@@ -18,18 +18,15 @@ export default function ProductDisplay({
   products,
   selectedCategory
 }: ProductDisplayProps) {
-  const filteredProducts =
-    selectedCategory === "All"
-      ? products
-      : products.filter((product) => product.category === selectedCategory)
   const [viewMode, setViewMode] = useState<ViewMode>("grid")
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     null
   )
 
-  const selectedProduct = selectedProductId
-    ? products.find((p) => p.id === selectedProductId)
-    : null
+  const filteredProducts =
+    selectedCategory === "All"
+      ? products
+      : products.filter((product) => product.category === selectedCategory)
 
   const handleCloseFullScreen = () => {
     setViewMode("grid")
@@ -45,8 +42,16 @@ export default function ProductDisplay({
     }
   }
 
+  useEffect(() => {
+    const stillExists = products.some((p) => p.id === selectedProductId)
+    if (!stillExists) {
+      setSelectedProductId(null)
+      setViewMode("grid")
+    }
+  }, [products, selectedProductId])
+
   return (
-    <div className="relative min-h-screen pt-[140px]   text-gray-900  dark:text-gray-100 p-3 scrollbar-hide z-50 w-full">
+    <div className="relative min-h-screen pt-[136px] text-gray-900 p-3 scrollbar-hide z-50 w-full">
       <div className="mb-4 flex justify-end w-full">
         <p className="text-gray-600 dark:text-gray-400 text-sm">
           {filteredProducts.length} products
@@ -65,7 +70,7 @@ export default function ProductDisplay({
               duration: 0.5,
               ease: "easeInOut"
             }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 scrollbar-hide min-w-full"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 scrollbar-hide min-w-full"
           >
             {filteredProducts.map((product, index) => (
               <ProductCard
@@ -80,12 +85,13 @@ export default function ProductDisplay({
           </motion.div>
         )}
 
-        {viewMode === "fullscreen" && selectedProduct && (
+        {viewMode === "fullscreen" && (
           <ProductFullScreenView
             key="product-fullscreen"
-            products={products}
-            onClose={handleCloseFullScreen}
             selectedCategory={selectedCategory}
+            onClose={handleCloseFullScreen}
+            initialProductId={selectedProductId ?? undefined}
+            products={filteredProducts}
           />
         )}
       </AnimatePresence>

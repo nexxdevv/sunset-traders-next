@@ -3,6 +3,8 @@
 import { auth } from "@/lib/firebase"
 import { useState } from "react"
 import getStripe from "@/lib/get-stripejs"
+import { FaStripe } from "react-icons/fa6"
+import { button } from "framer-motion/client"
 
 interface CartItem {
   id: string // Or whatever your product ID is
@@ -58,9 +60,16 @@ export default function CheckoutButton({
   return (
     <button
       onClick={handleCheckout}
-      className="px-4 py-2 w-full bg-yellow-400 text-gray-900 font-semibold rounded-lg hover:bg-gray-800 transition"
+      disabled={isLoading}
+      className=" py-1 w-full bg-yellow-400 text-gray-900 font-semibold rounded-lg hover:bg-gray-800 hover:text-white transition flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed text-[18px] scale-[.85]"
     >
-      {isLoading ? "Processing..." : "Checkout with Stripe"}
+      {isLoading ? (
+        "Processing..."
+      ) : (
+        <>
+          Checkout with <FaStripe size={50} className="inline-block" />
+        </>
+      )}
     </button>
   )
 }

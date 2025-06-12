@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useCartStore } from "@/stores/cartStore"
 import { Button } from "@/components/ui/button"
-import CheckoutButton from "@/components/checkout-button"
+import CheckoutButton from "@/components/ui/checkout-button"
 
 export default function CartPage() {
   interface CartItem {
@@ -55,10 +55,10 @@ export default function CartPage() {
                   className="rounded-lg object-cover w-20 h-20"
                 />
                 <div className="flex-1">
-                  <h3 className="font-semibold text-sm leading-tight">{item.name}</h3>
-                  <p className="text-gray-500 text-sm">
-                    ${item.price}
-                  </p>
+                  <h3 className="font-semibold text-sm leading-tight">
+                    {item.name}
+                  </h3>
+                  <p className="text-gray-500 text-sm">${item.price}</p>
                 </div>
                 <Button
                   variant="outline"
