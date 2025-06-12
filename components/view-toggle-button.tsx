@@ -13,7 +13,7 @@ const ViewToggleButton = ({
   return (
     <button
       onClick={toggleViewMode}
-      className="fixed bottom-[100px] right-3 p-2 rounded-full
+      className="fixed bottom-[20px] right-3 p-2 rounded-full
                    bg-white/90 dark:bg-dark-accent text-black/50 dark:text-dark-bg
                    shadow-lg hover:shadow-xl  z-[70]
                    flex items-center justify-center gap-2"

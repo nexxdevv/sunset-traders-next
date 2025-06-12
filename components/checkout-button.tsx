@@ -1,12 +1,8 @@
 "use client"
 
-import { loadStripe } from "@stripe/stripe-js"
 import { auth } from "@/lib/firebase"
 import { useState } from "react"
-
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-)
+import getStripe from "@/lib/get-stripejs"
 
 interface CartItem {
   id: string // Or whatever your product ID is
@@ -24,55 +20,47 @@ export default function CheckoutButton({
   const [isLoading, setIsLoading] = useState(false)
   const handleCheckout = async () => {
     try {
-      const userId = auth.currentUser?.uid;
+      const userId = auth.currentUser?.uid
       if (!userId) {
-        alert("Please log in to proceed with checkout.");
-        return; // Exit if no user
+        alert("Please log in to proceed with checkout.")
+        return // Exit if no user
       }
 
       const res = await fetch("/api/checkout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: cartItems, userId })
-      });
+        body: JSON.stringify({ cartItems, userId })
+      })
+      const data = await res.json()
 
-      const data = await res.json();
-
-      if (!res.ok) { // Check res.ok for HTTP errors (e.g., 400, 500)
-        console.error("API error:", data.error);
-        alert(`Checkout failed: ${data.error || "Please try again."}`);
-        return;
+      if (!res.ok || data.error) {
+        console.error("API error:", data.error)
+        alert(`Checkout failed: ${data.error || "Please try again."}`)
+        return
       }
 
-      if (!data.sessionId) {
-        console.error("No sessionId returned from API", data);
-        alert("Failed to initiate Stripe Checkout.");
-        return;
-      }
-
-      const stripe = await stripePromise;
-      const result = await stripe?.redirectToCheckout({
-        sessionId: data.sessionId
-      });
+      const sessionId = data.sessionId
+      const stripe = await getStripe()
+      const result = await stripe?.redirectToCheckout({ sessionId })
 
       if (result?.error) {
-        console.error("Stripe redirect error", result.error.message);
-        alert("Stripe error: " + result.error.message);
+        console.error("Stripe redirect error:", result.error.message)
+        alert(`Stripe error: ${result.error.message}`)
       }
+      setIsLoading(true) // Start loading state
     } catch (error) {
-      console.error("Checkout process failed:", error);
-      alert("An unexpected error occurred during checkout.");
+      console.error("Checkout process failed:", error)
+      alert("An unexpected error occurred during checkout.")
     } finally {
-      setIsLoading(false); // Stop loading regardless of outcome
+      setIsLoading(false) // Stop loading regardless of outcome
     }
   }
 
   return (
     <button
       onClick={handleCheckout}
-      className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition"
+      className="px-4 py-2 w-full bg-yellow-400 text-gray-900 font-semibold rounded-lg hover:bg-gray-800 transition"
     >
-      {isLoading ? "Processing..." : "Checkout"}
+      {isLoading ? "Processing..." : "Checkout with Stripe"}
     </button>
   )
 }

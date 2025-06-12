@@ -78,28 +78,16 @@ export default function ProductDetailPage({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen text-gray-800"
+      className="min-h-screen text-gray-800 pt-[78px]"
     >
       {/* Top Bar */}
-      <div className="fixed top-3 flex items-center right-0 z-10 w-full justify-between p-3">
-        <button
-          onClick={() => router.back()}
-          className="ml-3 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-        <h1 className="text-xl font-bold text-center flex-grow hidden md:block">
-          {product.name}
-        </h1>
-        <div style={{ width: "2rem" }} />
-      </div>
 
       {/* Main Carousel */}
       <div className="w-full p-3 flex flex-col gap-2">
         {/* Main Image */}
         <div
           {...swipeHandlers}
-          className="relative w-full h-[50vh] rounded-xl overflow-hidden bg-gray-200 cursor-pointer"
+          className="relative w-full h-[50vh] rounded-md overflow-hidden bg-gray-200 cursor-pointer"
           onClick={openModal}
         >
           <Image
@@ -159,14 +147,14 @@ export default function ProductDetailPage({
       </div>
 
       {/* Details */}
-      <div className="p-4 bg-[#2C2C2C] rounded-t-3xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
+      <div className="p-4 bg-[#2C2C2C] rounded-t-xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
         <div className="flex justify-between text-white items-center mb-4">
           <div>
-            <h2 className="text-[1.1rem] font-semibold">{product.name}</h2>
-            <p className="font-semibold">${product.price}</p>
+            <h2 className="text-2xl font-semibold">{product.name}</h2>
+            <p className="text-xl font-semibold">${product.price}</p>
           </div>
           <div className="flex space-x-4">
-            <ProductActions product={product} />
+            <ProductActions product={{ ...product, price: String(product.price) }} />
           </div>
         </div>
         <p className="text-white">{product.description}</p>
@@ -210,14 +198,14 @@ export default function ProductDetailPage({
             </>
           )}
           <div
-            className="relative w-full h-full max-w-5xl max-h-[90vh]"
+            className="relative w-full h-full max-w-5xl overflow-hidden rounded-md max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
               src={imageList[currentCarouselImageIndex]}
               alt={`${product.name} full screen`}
               fill
-              className="object-contain"
+              className="object-contain rounded-md"
             />
           </div>
         </div>

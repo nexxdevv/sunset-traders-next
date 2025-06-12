@@ -2,10 +2,9 @@
 import "@/app/globals.css"
 import { useEffect } from "react"
 import { onAuthStateChanged } from "firebase/auth"
-import BottomNav from "@/components/bottom-nav"
 import { auth } from "@/lib/firebase"
 import { useUserStore } from "@/stores/userStore"
-import { CartIcon } from "@/components/cart-icon"
+import TopNav from "@/components/top-nav"
 
 export default function RootLayout({
   children
@@ -22,11 +21,10 @@ export default function RootLayout({
     return () => unsubscribe()
   }, [])
   return (
-    <html lang="en">
-      <body className="  antialiased">
-        <CartIcon />
+    <html lang="en" className="scroll-smooth dark">
+      <body className="dark:bg-[#171717]  antialiased">
+        <TopNav />
         {children}
-        <BottomNav activePath="/" />
       </body>
     </html>
   )

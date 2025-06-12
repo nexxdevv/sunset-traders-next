@@ -4,21 +4,23 @@ export const products: Product[] = [
   {
     id: "1",
     name: "Giorgio Armani AR8186",
-    price: "40",
+    price: 100,
     description:
       "Stylish Italian sunglasses with polarized lenses. Light weight and comfortable fit for men and women.",
-    imageUrl: "/sunnies.png",
+    imageUrl:
+      "https://res.cloudinary.com/cloud-x/image/upload/v1749705421/sunnies_zggp6b.png",
     category: "sunglasses",
     dateAdded: "2025-06-01"
   },
 
   {
     id: "3",
-    name: "AirPods",
-    price: "20",
+    name: "Apple AirPods 5th Gen",
+    price: 30,
     description:
       "Wireless earbuds with noise cancellation. Perfect for music lovers.",
-    imageUrl: "/airpods.png",
+    imageUrl:
+      "https://res.cloudinary.com/cloud-x/image/upload/v1749705428/airpods_rfeyim.png",
     category: "electronics",
     dateAdded: "2025-06-03",
     carouselImages: [
@@ -29,10 +31,11 @@ export const products: Product[] = [
   {
     id: "4",
     name: "Hunting Knife",
-    price: "10",
+    price: 20,
     description:
       "High-quality black blade hunting knife. Slightly used but in great condition.",
-    imageUrl: "/knife.png",
+    imageUrl:
+      "https://res.cloudinary.com/cloud-x/image/upload/v1749705431/knife_thfqgx.png",
     category: "knives",
     dateAdded: "2025-06-04"
   },
@@ -40,7 +43,7 @@ export const products: Product[] = [
   {
     id: "6",
     name: "Vintage Leather Handbag",
-    price: "80",
+    price: 80,
     description:
       "Beautiful vintage leather handbag in excellent condition with classic design.",
     imageUrl:
@@ -51,8 +54,9 @@ export const products: Product[] = [
   {
     id: "7",
     name: "Ray-Ban Wayfarers",
-    price: "45",
-    description: "Classic Ray-Ban Wayfarer sunglasses. Minor scratches on lens.",
+    price: 60,
+    description:
+      "Classic Ray-Ban Wayfarer sunglasses. Minor scratches on lens.",
     imageUrl:
       "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=600&fit=crop&crop=center",
     category: "sunglasses",
@@ -60,9 +64,10 @@ export const products: Product[] = [
   },
   {
     id: "8",
-    name: "Pearl Necklace",
-    price: "75",
-    description: "Elegant pearl necklace in pristine condition. Perfect for special occasions.",
+    name: "Mother's Pearl's",
+    price: 90,
+    description:
+      "Elegant pearl necklace in pristine condition. Perfect for special occasions.",
     imageUrl:
       "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=600&fit=crop&crop=center",
     category: "jewelry",
@@ -72,7 +77,7 @@ export const products: Product[] = [
   {
     id: "12",
     name: "High-Waisted Jeans",
-    price: "45",
+    price: 60,
     description:
       "Vintage high-waisted jeans in perfect condition. Classic fit.",
     imageUrl:
@@ -83,7 +88,7 @@ export const products: Product[] = [
   {
     id: "13",
     name: "Leather Boots",
-    price: "95",
+    price: 100,
     description:
       "Genuine leather boots with minimal wear. Perfect for any occasion.",
     imageUrl:
@@ -94,9 +99,8 @@ export const products: Product[] = [
   {
     id: "15",
     name: "Vintage Bomber Jacket",
-    price: "110",
-    description:
-      "Classic bomber jacket. Military-inspired design.",
+    price: 100,
+    description: "Classic bomber jacket. Military-inspired design.",
     imageUrl:
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=600&fit=crop&crop=center",
     category: "jackets",
@@ -105,9 +109,8 @@ export const products: Product[] = [
   {
     id: "16",
     name: "Converse Chuck Taylor",
-    price: "40",
-    description:
-      "Classic Converse All Star sneakers. Timeless design.",
+    price: 60,
+    description: "Classic Converse All Star sneakers. Timeless design.",
     imageUrl:
       "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=400&h=600&fit=crop&crop=center",
     category: "sneakers",

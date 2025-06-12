@@ -112,7 +112,7 @@ const AccountPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col justify-center items-center p-4 bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 font-sans text-gray-800">
+      <div className="min-h-screen flex flex-col justify-center items-center p-4 bg-gradient-to-br pt-[170px] from-purple-100 via-blue-100 to-pink-100 font-sans text-gray-800">
         <div className="bg-white rounded-3xl shadow-xl p-10 max-w-md w-full animate-pulse">
           <p className="text-xl text-gray-600">Checking authentication...</p>
         </div>
@@ -123,7 +123,7 @@ const AccountPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-4 bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 font-sans text-gray-800">
       {user ? (
-        <div className="bg-white rounded-3xl shadow-xl p-10 max-w-2xl w-full space-y-6">
+        <div className="bg-white rounded-3xl mt-12 shadow-xl p-10 max-w-2xl w-full space-y-6">
           <div className="text-center">
             <Image
               src={user.photoURL || ""}

@@ -46,7 +46,12 @@ export default function ProductDisplay({
   }
 
   return (
-    <div className="relative min-h-screen pt-16  dark:bg-gray-900 text-gray-900  dark:text-gray-100 p-3 scrollbar-hide ">
+    <div className="relative min-h-screen pt-[140px]   text-gray-900  dark:text-gray-100 p-3 scrollbar-hide z-50 w-full">
+      <div className="mb-4 flex justify-end w-full">
+        <p className="text-gray-600 dark:text-gray-400 text-sm">
+          {filteredProducts.length} products
+        </p>
+      </div>
       <ViewToggleButton viewMode={viewMode} toggleViewMode={toggleViewMode} />
 
       <AnimatePresence>
@@ -60,14 +65,14 @@ export default function ProductDisplay({
               duration: 0.5,
               ease: "easeInOut"
             }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-24 scrollbar-hide"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 scrollbar-hide min-w-full"
           >
             {filteredProducts.map((product, index) => (
               <ProductCard
                 key={product.id}
                 product={{
                   ...product,
-                  price: product.price.toString()
+                  price: product.price
                 }}
                 index={index}
               />

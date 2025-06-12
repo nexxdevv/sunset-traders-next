@@ -71,14 +71,13 @@ export function ProductActions({
       >
         <Heart
           className="w-5 h-5"
-          fill={isFavorited ? "currentColor" : "none"}
         />
       </button>
       <button
         onClick={handleAddToCart}
-        className={`p-3 rounded-full shadow bg-white text-gray-700 relative ${
+        className={`p-3 rounded-full shadow  text-gray-700 relative ${
           size === "sm" && "scale-[83%]"
-        } ${isInCart ? "bg-yellow-400" : "hover:bg-gray-100"}`}
+        } ${isInCart ? "bg-[#365DB6] text-white" : "hover:bg-gray-100 bg-white"}`}
       >
         <ShoppingCart className="w-5 h-5" />
       </button>
