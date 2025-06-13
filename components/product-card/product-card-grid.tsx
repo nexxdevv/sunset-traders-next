@@ -4,10 +4,8 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { Product } from "@/types/product"
-import { Heart as HeartIcon } from "lucide-react"
 import { Tsukimi_Rounded } from "next/font/google"
 import { useUserStore } from "@/stores/userStore"
-import { PiTagFill } from "react-icons/pi"
 const tsukimi = Tsukimi_Rounded({ weight: "400", subsets: ["latin"] })
 
 interface ProductCardProps {
@@ -23,12 +21,6 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
         href={`/shop/${product.id}`}
         className="relative block w-full aspect-square rounded-md"
       >
-        {product.isOnSale && (
-          <div className="absolute top-1 right-2 z-10">
-            <PiTagFill size={36} className="text-merchant-accent" />
-          </div>
-        )}
-
         <Image
           src={product.imageUrl || "/placeholder.png"}
           alt={product.name}
@@ -48,19 +40,13 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
             }
           }}
           type="button"
-          className={
-            "border px-2 py-1.5 cursor-pointer flex items-center justify-center gap-2 w-1/2 -translate-y-5 bg-white ml-auto text-sm"
-          }
+          className={`border px-2 font-[500] py-1.5 cursor-pointer flex items-center justify-center w-1/2 -translate-y-5  ml-auto text-sm ${
+            savedProducts.includes(product.id)
+              ? "bg-black border-black/50 text-white "
+              : "bg-white"
+          }`}
         >
           <span>{savedProducts.includes(product.id) ? "Saved" : "Save"}</span>
-          <HeartIcon
-            size={18}
-            className={
-              savedProducts.includes(product.id)
-                ? "text-red-500 fill-red-500"
-                : ""
-            }
-          />
         </button>
         <h3 className="font-semibold -mt-2 text-gray-800 w-full leading-tight dark:text-white">
           {product.name}
@@ -80,7 +66,7 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
           </div>
           <Link
             href={`/shop/${product.id}`}
-            className="border px-2 py-1.5  cursor-pointer flex items-center justify-center gap-2 w-auto ml-auto text-sm"
+            className="border px-2 py-1.5  cursor-pointer bg-white flex items-center justify-center gap-2 w-auto ml-auto text-sm"
           >
             More Details
           </Link>

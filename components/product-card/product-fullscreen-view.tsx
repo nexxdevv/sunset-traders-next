@@ -4,9 +4,10 @@ import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
-import { ProductActions } from "./product-actions"
+import { ChevronLeft, ChevronRight, ShoppingCart, X } from "lucide-react"
 import type { Product } from "@/types/product"
+import { useUserStore } from "@/stores/userStore"
+import { useCartStore } from "@/stores/cartStore"
 
 interface ProductFullScreenViewProps {
   products: Product[]
@@ -21,12 +22,16 @@ export default function ProductFullScreenView({
   onClose,
   initialProductId
 }: ProductFullScreenViewProps) {
+  const { cartItems, addToCart, removeItem } = useCartStore()
+  const { addSavedProduct, removeSavedProduct, savedProducts } = useUserStore(
+    (state) => state
+  )
   const filteredProducts =
     selectedCategory === "All"
       ? products
       : products.filter((p) => p.category === selectedCategory)
 
-  const [currentProductIndex, setCurrentProductIndex] = useState(() => {
+  const [currentProductIndex, _setCurrentProductIndex] = useState(() => {
     if (initialProductId) {
       const i = filteredProducts.findIndex((p) => p.id === initialProductId)
       return i >= 0 ? i : 0
@@ -71,9 +76,21 @@ export default function ProductFullScreenView({
     }))
   }
 
+  const handleAddToCart = (product: Product) => {
+    if (cartItems.some((item: Product) => item.id === product.id)) {
+      removeItem(product.id)
+    } else {
+      addToCart(product)
+    }
+  }
+
+  const isInCart = cartItems.some(
+    (item: Product) => item.id === filteredProducts[currentProductIndex]?.id
+  )
+
   if (filteredProducts.length === 0) {
     return (
-      <motion.div className="fixed inset-0 z-50 bg-black flex items-center justify-center text-white">
+      <motion.div className="fixed top-[190px] inset-x-0 h-[calc(100vh-70px)] z-50 bg-black flex items-center justify-center text-white">
         <p>No products found in this category.</p>
         <button
           onClick={onClose}
@@ -159,7 +176,14 @@ export default function ProductFullScreenView({
             <div className="absolute bottom-0 left-0 right-0 p-3 text-white  z-30">
               <Link href={`/shop/${product.id}`} passHref>
                 <div className="flex justify-between items-start mb-2">
-                  <h2 className="text-xl font-semibold">{product.name}</h2>
+                  <div className="flex flex-col">
+                    <h2 className="text-xl font-semibold">{product.name}</h2>
+                    {product.subtitle && (
+                      <h2 className="text-lg leading-tight font-semibold">
+                        {product?.subtitle}
+                      </h2>
+                    )}
+                  </div>
                   <p className="text-xl font-semibold ">${product.price}</p>
                 </div>
                 <p className="text-[17px] font-500] text-gray-200 mb-4 line-clamp-3">
@@ -167,11 +191,38 @@ export default function ProductFullScreenView({
                 </p>
               </Link>
 
-              <ProductActions
-                product={{ ...product, price: String(product.price) }}
-                direction="row"
-                showDetailsButton
-              />
+              <div className="flex gap-1 items-center justify-between">
+                <button
+                  onClick={() => {
+                    if (savedProducts.includes(product.id)) {
+                      removeSavedProduct(product.id)
+                    } else {
+                      addSavedProduct(product.id)
+                    }
+                  }}
+                  type="button"
+                  className={`border px-2 font-[500] h-10 cursor-pointer flex items-center justify-center w-1/2 ml-auto text-sm ${
+                    savedProducts.includes(product.id)
+                      ? "bg-black border-black/50 text-white"
+                      : "bg-white text-black"
+                  }`}
+                >
+                  <span>
+                    {savedProducts.includes(product.id) ? "Saved" : "Save"}
+                  </span>
+                </button>
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  type="button"
+                  className={`border px-2 font-[500]  h-10 cursor-pointer flex gap-1 items-center justify-center w-1/2 ml-auto text-sm ${
+                    isInCart
+                      ? "bg-merchant-accent border-merchant-accent text-white"
+                      : " text-gray-800 bg-white"
+                  }`}
+                >
+                  <ShoppingCart size={22} />
+                </button>
+              </div>
             </div>
           </div>
         )

@@ -7,7 +7,6 @@ export const products: Product[] = [
     subtitle: "AR8186",
     price: 40,
     ogPrice: 350,
-    isOnSale: true,
     description:
       "Stylish Italian sunglasses with polarized lenses. Light weight and comfortable fit for men and women.",
     imageUrl:
@@ -103,7 +102,7 @@ export const products: Product[] = [
   {
     id: "15",
     name: "Vintage Bomber Jacket",
-    price: 100,
+    price: 30,
     description: "Classic bomber jacket. Military-inspired design.",
     imageUrl:
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=600&fit=crop&crop=center",

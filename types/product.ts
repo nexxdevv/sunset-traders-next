@@ -4,7 +4,6 @@ export type Product = {
   subtitle?: string
   price: number
   ogPrice?: number
-  isOnSale?: boolean
   description: string
   imageUrl: string
   category: string

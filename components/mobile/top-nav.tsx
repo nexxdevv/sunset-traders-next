@@ -38,7 +38,7 @@ interface CartStore {
 }
 
 export default function TopNav() {
-  const { user, loading, handleGoogleSignIn, handleSignOut } = useAuth() // Use the custom auth hook
+  const { user, handleGoogleSignIn, handleSignOut } = useAuth() // Use the custom auth hook
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
@@ -95,7 +95,7 @@ export default function TopNav() {
   }
 
   return (
-    <header className="fixed top-0 z-[80] w-full bg-merchant shadow-md px-3 h-[70px] flex items-center justify-between">
+    <header className="fixed top-0 z-[80] w-full bg-merchant  px-3 h-[70px] flex items-center justify-between">
       {/* Left: Menu Button */}
       <button
         onClick={toggleMenu}

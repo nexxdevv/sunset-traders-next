@@ -4,7 +4,6 @@ import { auth } from "@/lib/firebase"
 import { useState } from "react"
 import getStripe from "@/lib/get-stripejs"
 import { FaStripe } from "react-icons/fa6"
-import { button } from "framer-motion/client"
 
 interface CartItem {
   id: string // Or whatever your product ID is

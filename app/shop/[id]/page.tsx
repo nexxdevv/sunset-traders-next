@@ -4,13 +4,13 @@
 import React, { useState, useEffect, use } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { ChevronLeft, ChevronRight, ShareIcon, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { products } from "@/data/products"
 import { Product } from "@/types/product"
 import { useSwipeable } from "react-swipeable"
 
 import { motion } from "framer-motion"
-import { Heart as HeartIcon, ShoppingCart, Bookmark } from "lucide-react"
+import {  ShoppingCart } from "lucide-react"
 import { useCartStore } from "@/stores/cartStore"
 import { useUserStore } from "@/stores/userStore"
 
@@ -94,9 +94,9 @@ export default function ProductDetailPage({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.3 }}
       className="min-h-screen text-gray-800 pt-[70px]"
     >
@@ -179,8 +179,8 @@ export default function ProductDetailPage({
             <div className="flex items-center mt-2 w-full ">
               <p className="text-2xl mt-1 font-semibold">${product.price}</p>
               {product?.ogPrice && (
-                <div className="bg-red-300 ml-2">
-                  <p className="text-lg mt-1 scale-[0.85] font-semibold">
+                <div className="bg-red-300 ml-2 translate-y-0.5">
+                  <p className="text-lg scale-[0.85] font-semibold">
                     ${product?.ogPrice} <span className="text-xs">MSRP</span>
                   </p>
                 </div>
@@ -197,18 +197,12 @@ export default function ProductDetailPage({
                 }
               }}
               type="button"
-              className={`${
-                savedProducts.includes(product.id) && "fill-red-500"
-              } border px-2 py-1.5 flex cursor-pointer items-center justify-center font-500] gap-2 flex-1 bg-white"`}
+              className={`border px-2 font-[500] py-1.5 cursor-pointer flex items-center justify-center w-1/2   ml-auto  ${
+                savedProducts.includes(product.id)
+                  ? "bg-black border-black/50 text-white"
+                  : "bg-white"
+              }`}
             >
-              <HeartIcon
-                size={22}
-                className={
-                  savedProducts.includes(product.id)
-                    ? "text-red-500 fill-red-500"
-                    : ""
-                }
-              />
               <span>
                 {savedProducts.includes(product.id) ? "Saved" : "Save"}
               </span>
@@ -223,7 +217,6 @@ export default function ProductDetailPage({
               }`}
             >
               <ShoppingCart size={22} />
-              <span>{isInCart ? "In the cart" : "Add to cart"}</span>
             </button>
           </div>
         </div>

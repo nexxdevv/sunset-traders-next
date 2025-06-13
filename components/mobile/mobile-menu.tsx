@@ -128,7 +128,7 @@ export default function MobileMenu({
                     <h1
                       className={`${shizShizuru.className} text-[60px] font-bold rotate-[-9deg] mb-2 leading-[1.1] uppercase`}
                     >
-                      Looney Mike's
+                      Looney Mike&apos;s
                     </h1>
                     <h1
                       className={`${rubik_glitch.className} text-[56px] font-bold mb-8 leading-[1.1] uppercase`}

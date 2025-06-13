@@ -2,11 +2,11 @@
 
 import { useRef, useEffect } from "react"
 import { cn } from "@/lib/utils"
-import { DM_Sans } from "next/font/google"
+import { Space_Grotesk } from "next/font/google"
 
-const dM_Sans = DM_Sans({
+const luckSpace_Grotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "700"]
+  weight: ["400", "700"]
 })
 
 interface CategorySelectorProps {
@@ -44,7 +44,7 @@ export default function CategorySelector({
   return (
     <div
       ref={scrollContainerRef}
-      className="flex fixed top-[70px] left-0 right-0 items-center gap-2 overflow-x-auto pt-4 pb-2 px-3 scrollbar-hide overflow-y-hidden z-[60]"
+      className="flex fixed top-[53px] left-0 right-0 items-center overflow-x-auto pt-4 pb-8  scrollbar-hide overflow-y-hidden z-[60]"
     >
       {categories.map((category) => {
         const isActive = category === selectedCategory
@@ -54,10 +54,10 @@ export default function CategorySelector({
             ref={isActive ? activeButtonRef : null}
             onClick={() => onSelectCategory(category)}
             className={cn(
-              `${dM_Sans.className} px-4 py-2 rounded-full text-[15px] whitespace-nowrap transition-all capitalize duration-500 ease-in-out ring-offset-sky-500/30 ring-1 ring-inset ring-merchant/20 text-gray-700`,
+              `${luckSpace_Grotesk.className} uppercase cursor-pointer px-4 py-1.5  text-[15px] whitespace-nowrap font-[600]`,
               isActive
-                ? "bg-merchant-accent text-white font-[500] shadow-sm"
-                : "bg-gray-100 text-gray-700 ring-merchant/20 font-[500]"
+                ? "bg-merchant-accent text-white "
+                : "bg-white"
             )}
           >
             {category}

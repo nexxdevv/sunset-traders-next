@@ -51,9 +51,9 @@ export default function ProductDisplay({
   }, [products, selectedProductId])
 
   return (
-    <div className="relative min-h-screen pt-[136px] text-gray-900 p-3 scrollbar-hide z-50 w-full">
+    <div className="relative min-h-screen pt-[115px] text-gray-900 p-3 scrollbar-hide z-50 w-full">
       <div className="mb-4 flex justify-end w-full">
-        <p className="text-gray-600 dark:text-gray-400 text-sm">
+        <p className=" dark:text-gray-400 text-sm">
           {filteredProducts.length} products
         </p>
       </div>

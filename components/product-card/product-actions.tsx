@@ -1,6 +1,6 @@
 "use client"
 
-import { Heart, ShoppingCart, Bookmark } from "lucide-react"
+import { Heart, ShoppingCart } from "lucide-react"
 import { useUserStore } from "@/stores/userStore"
 import { useCartStore } from "@/stores/cartStore"
 
@@ -21,9 +21,8 @@ export function ProductActions({
   product,
   direction = "row",
   size = "md", // default size is "md",
-  showDetailsButton = false
 }: ProductActionsProps) {
-  const { savedProducts, addSavedProduct, removeSavedProduct, f } =
+  const { savedProducts, addSavedProduct, removeSavedProduct } =
     useUserStore()
   const { cartItems, addToCart, removeItem } = useCartStore()
 

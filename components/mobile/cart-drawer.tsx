@@ -52,7 +52,7 @@ export default function CartDrawer({
 
           <motion.div
             key="cart-drawer"
-            initial={{ x: "100%", opacity: 0.8 }}
+            initial={{ x: "100%", opacity: 0.9 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
             transition={{ type: "tween", ease: "easeInOut", duration: 0.2 }}
