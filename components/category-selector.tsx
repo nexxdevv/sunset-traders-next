@@ -54,10 +54,10 @@ export default function CategorySelector({
             ref={isActive ? activeButtonRef : null}
             onClick={() => onSelectCategory(category)}
             className={cn(
-              `${luckSpace_Grotesk.className} uppercase cursor-pointer px-4 py-1.5  text-[15px] whitespace-nowrap font-[600]`,
+              `${luckSpace_Grotesk.className} tracking-wider uppercase cursor-pointer px-4 py-1.5  text-[15px] whitespace-nowrap font-[600] transition-all duration-300`,
               isActive
-                ? "bg-merchant-accent text-white "
-                : "bg-white"
+                ? "bg-merchant-accent  "
+                : "bg-white text-gray-800"
             )}
           >
             {category}

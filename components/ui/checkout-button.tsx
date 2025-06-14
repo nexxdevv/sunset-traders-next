@@ -4,6 +4,7 @@ import { auth } from "@/lib/firebase"
 import { useState } from "react"
 import getStripe from "@/lib/get-stripejs"
 import { FaStripe } from "react-icons/fa6"
+import { useUserStore } from "@/stores/userStore"
 
 interface CartItem {
   id: string // Or whatever your product ID is
@@ -18,6 +19,7 @@ export default function CheckoutButton({
 }: {
   cartItems: CartItem[]
 }) {
+  const { user } = useUserStore()
   const [isLoading, setIsLoading] = useState(false)
   const handleCheckout = async () => {
     try {
@@ -29,9 +31,10 @@ export default function CheckoutButton({
 
       const res = await fetch("/api/checkout", {
         method: "POST",
-        body: JSON.stringify({ cartItems, userId })
+        body: JSON.stringify({ cartItems, userId: user.uid })
       })
       const data = await res.json()
+      console.log("Checkout response:", data)
 
       if (!res.ok || data.error) {
         console.error("API error:", data.error)
@@ -60,13 +63,14 @@ export default function CheckoutButton({
     <button
       onClick={handleCheckout}
       disabled={isLoading}
-      className=" py-1 w-full bg-yellow-400 text-gray-900 font-semibold rounded-lg hover:bg-gray-800 hover:text-white transition flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed text-[18px] scale-[.85]"
+      className=" py-1 w-full bg-yellow-400 text-gray-900 cursor-pointer font-[700] hover:bg-gray-800 hover:text-white transition flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed text-[21px] scale-[.85]"
     >
       {isLoading ? (
         "Processing..."
       ) : (
         <>
-          Checkout with <FaStripe size={50} className="inline-block" />
+          Checkout with{" "}
+          <FaStripe size={56} className="inline-block translate-y-[1px]" />
         </>
       )}
     </button>

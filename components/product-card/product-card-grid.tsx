@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Product } from "@/types/product"
 import { Tsukimi_Rounded } from "next/font/google"
 import { useUserStore } from "@/stores/userStore"
+
 const tsukimi = Tsukimi_Rounded({ weight: "400", subsets: ["latin"] })
 
 interface ProductCardProps {
@@ -15,8 +16,32 @@ interface ProductCardProps {
 
 export default function ProductCardGrid({ product, index }: ProductCardProps) {
   const { savedProducts, addSavedProduct, removeSavedProduct } = useUserStore()
+  const saveProductToggle = (product: Product) => {
+    if (
+      savedProducts.some(
+        (savedProduct: Product) => savedProduct.id === product.id
+      )
+    ) {
+      removeSavedProduct(product.id)
+    } else {
+      addSavedProduct(product)
+    }
+  }
   return (
-    <motion.div className="overflow-hidden transition-all w-full">
+    <motion.div
+      key={product.id}
+      id={product.id}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0.6 }}
+      transition={{
+        duration: 0.4,
+        ease: "easeInOut",
+        delay: index * 0.1,
+        staggerChildren: 0.1
+      }}
+      className="overflow-hidden  w-full h-full flex flex-col"
+    >
       <Link
         href={`/shop/${product.id}`}
         className="relative block w-full aspect-square rounded-md"
@@ -30,33 +55,37 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
         />
       </Link>
 
-      <div className="flex flex-col items-start gap-1 pb-3 px-1 pt-1">
+      <div className="flex flex-col justify-between flex-grow pb-3 px-1 pt-1 gap-2">
         <button
-          onClick={() => {
-            if (savedProducts.includes(product.id)) {
-              removeSavedProduct(product.id)
-            } else {
-              addSavedProduct(product.id)
-            }
-          }}
+          onClick={() => saveProductToggle(product)}
           type="button"
-          className={`border px-2 font-[500] py-1.5 cursor-pointer flex items-center justify-center w-1/2 -translate-y-5  ml-auto text-sm ${
-            savedProducts.includes(product.id)
-              ? "bg-black border-black/50 text-white "
+          className={`border px-2 transition-colors duration-300 font-[500] py-1.5 cursor-pointer flex items-center justify-center w-1/2 -translate-y-5 ml-auto text-sm ${
+            savedProducts.some(
+              (savedProduct: Product) => savedProduct.id === product.id
+            )
+              ? "bg-black border-black/50 text-white"
               : "bg-white"
           }`}
         >
-          <span>{savedProducts.includes(product.id) ? "Saved" : "Save"}</span>
+          <span>
+            {savedProducts.some(
+              (savedProduct: Product) => savedProduct.id === product.id
+            )
+              ? "Saved"
+              : "Save"}
+          </span>
         </button>
-        <h3 className="font-semibold -mt-2 text-gray-800 w-full leading-tight dark:text-white">
-          {product.name}
-        </h3>
-        {product.subtitle && (
-          <h4 className="font-semibold text-gray-800 w-full leading-tight text-sm dark:text-white">
-            {product?.subtitle}
-          </h4>
-        )}
-        <div className="flex mt-4 justify-between items-center w-full">
+        <div className="flex flex-col">
+          <h3 className="font-semibold -mt-2 text-gray-800 w-full leading-tight dark:text-white">
+            {product.name}
+          </h3>
+          {product.subtitle && (
+            <h4 className="font-semibold text-gray-800 w-full leading-tight text-sm dark:text-white">
+              {product?.subtitle}
+            </h4>
+          )}
+        </div>
+        <div className="flex justify-between items-center w-full mt-2">
           <div className="relative">
             <p
               className={`${tsukimi.className}text-gray-800 font-[500] text-[17px] dark:text-gray-400`}
@@ -66,9 +95,9 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
           </div>
           <Link
             href={`/shop/${product.id}`}
-            className="border px-2 py-1.5  cursor-pointer bg-white flex items-center justify-center gap-2 w-auto ml-auto text-sm"
+            className=" px-3 py-1.5  cursor-pointer bg-merchant-accent flex items-center justify-center gap-2 w-auto ml-auto text-sm  font-[500]"
           >
-            More Details
+            More details
           </Link>
         </div>
       </div>

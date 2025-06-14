@@ -44,7 +44,7 @@ export default function MobileMenu({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-[70px] bg-black/30 backdrop-blur-lg z-30 md:hidden"
+            className="fixed inset-0 top-[69px] bg-black/30 backdrop-blur-lg z-30 md:hidden"
             onClick={() => setMenuOpen(false)}
           />
 
@@ -55,7 +55,7 @@ export default function MobileMenu({
             exit={{ x: "-100%", opacity: 0.9 }}
             transition={{ type: "tween", ease: "easeInOut", duration: 0.2 }}
             // You might want to adjust the background and backdrop-filter for the image effect
-            className="fixed top-[70px] left-0 h-[calc(100vh-70px)] w-[90%] bg-[#285EBC]  z-40 md:hidden"
+            className="fixed top-[70px] left-0 h-[calc(100vh-70px)] w-[90%]   z-40 md:hidden"
           >
             {/* Background Image Container for the menu */}
             <div
@@ -63,16 +63,15 @@ export default function MobileMenu({
               style={{
                 backgroundImage: `url('https://res.cloudinary.com/cloud-x/image/upload/v1749705411/sunset-triangle_zxolkp.png')`,
                 backgroundSize: "cover",
-                backgroundPosition: "center",
-                filter: "brightness(0.6)" // Darken the background image for readability
+                backgroundPosition: "center"
               }}
             />
 
             {/* Menu Content with backdrop-filter */}
-            <div className="relative z-10  w-full mx-auto h-full flex flex-col justify-between py-6 bg-merchant/60 bg-gradient-to-r from-merchant/50 to-[#285EBC]/20 ">
+            <div className="relative z-10  w-full mx-auto h-full flex bg-white/10 backdrop-blur-sm flex-col justify-between pb-6  ">
               {user ? (
                 <>
-                  <div className="w-full flex flex-col items-center justify-center p-4 mb-4">
+                  <div className="w-ful  flex flex-col items-center justify-center p-4">
                     <Image
                       src={user.photoURL || "https://via.placeholder.com/150"} // Use user's photoURL or a placeholder
                       alt={user.displayName || "User Avatar"}
@@ -84,7 +83,7 @@ export default function MobileMenu({
                       {user.displayName || "User"}
                     </p>
                   </div>
-                  <ul className="mb-8 px-4 flex-grow flex flex-col gap-2 ">
+                  <ul className="mb-8 px-4 flex flex-col gap-2  uppercase">
                     {" "}
                     {/* flex-grow to push sign-out to bottom */}
                     <li>

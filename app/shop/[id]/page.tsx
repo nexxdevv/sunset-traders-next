@@ -10,7 +10,7 @@ import { Product } from "@/types/product"
 import { useSwipeable } from "react-swipeable"
 
 import { motion } from "framer-motion"
-import {  ShoppingCart } from "lucide-react"
+import { ShoppingCart } from "lucide-react"
 import { useCartStore } from "@/stores/cartStore"
 import { useUserStore } from "@/stores/userStore"
 
@@ -36,6 +36,18 @@ export default function ProductDetailPage({
     onSwipedRight: () => handlePrev(),
     trackMouse: true // optional: enables swipe with mouse drag for testing
   })
+
+  const saveProductToggle = (product: Product) => {
+    if (
+      savedProducts.some(
+        (savedProduct: Product) => savedProduct.id === product.id
+      )
+    ) {
+      removeSavedProduct(product.id)
+    } else {
+      addSavedProduct(product)
+    }
+  }
 
   useEffect(() => {
     const found = products.find((p) => p.id === params.id)
@@ -97,7 +109,7 @@ export default function ProductDetailPage({
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
       className="min-h-screen text-gray-800 pt-[70px]"
     >
       {/* Top Bar */}
@@ -140,15 +152,71 @@ export default function ProductDetailPage({
             </>
           )}
         </div>
+        <div className="flex px-3 gap-1 text-gray-800">
+          <button
+            onClick={() => saveProductToggle(product)}
+            type="button"
+            className={`border px-2 font-[500] py-1.5 cursor-pointer flex transition-colors duration-300 items-center justify-center w-1/2 text-sm ${
+              savedProducts.some(
+                (savedProduct: Product) => savedProduct.id === product.id
+              )
+                ? "bg-black border-black/50 text-white"
+                : "bg-white"
+            }`}
+          >
+            <span>
+              {savedProducts.some(
+                (savedProduct: Product) => savedProduct.id === product.id
+              )
+                ? "Saved"
+                : "Save"}
+            </span>
+          </button>
+          <button
+            onClick={handleAddToCart}
+            type="button"
+            className={`border  px-2 py-1.5 flex items-center transition-colors duration-300 justify-center gap-2 flex-1  cursor-pointer whitespace-nowrap font-[500] ${
+              isInCart
+                ? "bg-merchant-accent border-merchant-accent "
+                : " text-gray-800"
+            }`}
+          >
+            <ShoppingCart size={22} />
+          </button>
+        </div>
+      </div>
 
+      {/* Details */}
+      <div className="p-3 dark:bg-dark rounded-t-xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
+        <div className="flex flex-col-reverse gap-3 justify-between   mb-4">
+          <div>
+            <h2 className="text-2xl font-semibold leading-tight">
+              {product.name}
+            </h2>
+            <h2 className="text-xl font-semibold leading-tight">
+              {product?.subtitle}
+            </h2>
+            <div className="flex items-center mt-2 w-full ">
+              <p className="text-2xl mt-1 font-semibold">${product.price}</p>
+              {product?.ogPrice && (
+                <div className="bg-merchant-accent ml-2 translate-y-0.5">
+                  <p className="text-lg scale-[0.85] font-semibold">
+                    ${product?.ogPrice} <span className="text-xs">MSRP</span>
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <p className="text-[18px] leading-snug">{product.description}</p>
         {/* Thumbnail Scroll Row */}
         {hasCarouselImages && (
-          <div className="flex overflow-x-auto gap-2 px-1">
+          <div className="flex overflow-x-auto gap-1 mt-4">
             {imageList.map((img, idx) => (
               <div
                 key={idx}
                 onClick={() => setCurrentCarouselImageIndex(idx)}
-                className={`relative min-w-[4rem] w-20 aspect-square rounded-lg overflow-hidden border-2 cursor-pointer transition-all ${
+                className={`relative min-w-[4rem] w-20 aspect-square  overflow-hidden border-2 cursor-pointer transition-all ${
                   idx === currentCarouselImageIndex
                     ? "border-blue-500"
                     : "border-transparent"
@@ -166,67 +234,10 @@ export default function ProductDetailPage({
         )}
       </div>
 
-      {/* Details */}
-      <div className="p-3 dark:bg-dark rounded-t-xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
-        <div className="flex flex-col-reverse gap-4 justify-between   mb-4">
-          <div>
-            <h2 className="text-2xl font-semibold leading-tight">
-              {product.name}
-            </h2>
-            <h2 className="text-xl font-semibold leading-tight">
-              {product?.subtitle}
-            </h2>
-            <div className="flex items-center mt-2 w-full ">
-              <p className="text-2xl mt-1 font-semibold">${product.price}</p>
-              {product?.ogPrice && (
-                <div className="bg-red-300 ml-2 translate-y-0.5">
-                  <p className="text-lg scale-[0.85] font-semibold">
-                    ${product?.ogPrice} <span className="text-xs">MSRP</span>
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="flex gap-1 text-gray-800">
-            <button
-              onClick={() => {
-                if (savedProducts.includes(product.id)) {
-                  removeSavedProduct(product.id)
-                } else {
-                  addSavedProduct(product.id)
-                }
-              }}
-              type="button"
-              className={`border px-2 font-[500] py-1.5 cursor-pointer flex items-center justify-center w-1/2   ml-auto  ${
-                savedProducts.includes(product.id)
-                  ? "bg-black border-black/50 text-white"
-                  : "bg-white"
-              }`}
-            >
-              <span>
-                {savedProducts.includes(product.id) ? "Saved" : "Save"}
-              </span>
-            </button>
-            <button
-              onClick={handleAddToCart}
-              type="button"
-              className={`border  px-2 py-1.5 flex items-center justify-center gap-2 flex-1  cursor-pointer whitespace-nowrap font-[500] ${
-                isInCart
-                  ? "bg-merchant-accent border-merchant-accent text-white"
-                  : " text-gray-800"
-              }`}
-            >
-              <ShoppingCart size={22} />
-            </button>
-          </div>
-        </div>
-        <p className="text-[18px] leading-snug">{product.description}</p>
-      </div>
-
       {/* Fullscreen Modal */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[90] p-4"
           onClick={closeModal}
         >
           <button

@@ -10,7 +10,7 @@ export const products: Product[] = [
     description:
       "Stylish Italian sunglasses with polarized lenses. Light weight and comfortable fit for men and women.",
     imageUrl:
-      "https://res.cloudinary.com/cloud-x/image/upload/v1749705421/sunnies_zggp6b.png",
+      "https://res.cloudinary.com/cloud-x/image/upload/v1749928253/sunnies_lidso7.png",
     category: "sunglasses",
     dateAdded: "2025-06-01"
   },

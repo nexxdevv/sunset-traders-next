@@ -6,6 +6,8 @@ import { Menu, X, Search, ShoppingCart } from "lucide-react"
 import Link from "next/link"
 import { useCartStore } from "@/stores/cartStore"
 import { Funnel_Display } from "next/font/google"
+import { Work_Sans } from "next/font/google"
+import { motion, AnimatePresence } from "framer-motion"
 
 // Import the new components and hook
 import { useAuth } from "@/hooks/useAuth"
@@ -18,6 +20,11 @@ import { products as inventory } from "@/data/products"
 import { Product } from "@/types/product" // Ensure Product type is imported
 
 const funnel_display = Funnel_Display({
+  subsets: ["latin"],
+  weight: ["400", "700"]
+})
+
+const geologica = Work_Sans({
   subsets: ["latin"],
   weight: ["400", "700"]
 })
@@ -95,7 +102,11 @@ export default function TopNav() {
   }
 
   return (
-    <header className="fixed top-0 z-[80] w-full bg-merchant  px-3 h-[70px] flex items-center justify-between">
+    <header
+      className="fixed top-0 z-[80] w-full h-[70px] flex items-center justify-between bg-white 
+             
+             px-3"
+    >
       {/* Left: Menu Button */}
       <button
         onClick={toggleMenu}
@@ -103,14 +114,14 @@ export default function TopNav() {
         aria-label="Toggle Menu"
       >
         {menuOpen ? (
-          <X size={30} className="text-white" />
+          <X size={30} className="text-gray-800" />
         ) : (
-          <Menu size={30} className="text-white" />
+          <Menu size={30} className="text-gray-800" />
         )}
       </button>
 
       {/* Center: Logo */}
-      <div className="absolute text-white left-1/2 transform text-center -translate-x-1/2 -translate-y-[8px]">
+      <div className="absolute text-gray-800 left-1/2 transform text-center -translate-x-1/2 -translate-y-[8px]">
         <Link href="/" className="relative block h-full w-full">
           <div className="relative inline-block">
             <h1
@@ -119,7 +130,9 @@ export default function TopNav() {
               Sunset
             </h1>
           </div>
-          <p className="leading-tight font-normal -mt-[16px] uppercase text-sm tracking-[0.12em] scale-[.89]">
+          <p
+            className={`${geologica.className} leading-tight font-[400] -mt-[15px] uppercase text-sm tracking-[0.18em] scale-[.87]`}
+          >
             Traders<span className="text-xs">&copy;</span>
           </p>
         </Link>
@@ -132,15 +145,24 @@ export default function TopNav() {
           onClick={openSearch}
           aria-label="Search"
         >
-          <Search size={23} className="text-white" />
+          <Search size={23} className="text-gray-800" />
         </button>
         <button onClick={toggleCart} aria-label="Cart" className="relative">
-          <ShoppingCart size={23} className="text-white cursor-pointer" />
-          {cartItems.length > 0 && (
-            <span className="absolute -bottom-2 -right-2.5 bg-merchant-accent text-white text-xs rounded-full w-5 h-5 flex items-center  justify-center font-bold scale-[.9]">
-              {cartItems.length}
-            </span>
-          )}
+          <ShoppingCart size={23} className="text-gray-800 cursor-pointer" />
+          <AnimatePresence>
+            {cartItems.length > 0 && (
+              <motion.span
+                key="cart-badge"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className={`absolute -bottom-2  -right-2.5 bg-merchant-accent  text-xs rounded-full w-5 h-5 flex items-center  justify-center font-bold scale-[.9] `}
+              >
+                {cartItems.length}
+              </motion.span>
+            )}
+          </AnimatePresence>
         </button>
       </div>
 

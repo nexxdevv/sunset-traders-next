@@ -42,7 +42,7 @@ export default function SearchOverlay({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -50, opacity: 0 }}
             transition={{ type: "tween", duration: 0.2 }}
-            className="fixed top-0 left-0 right-0 z-40 bg-[#365DB6] bg-opacity-90 backdrop-blur-md p-4 text-white"
+            className="fixed top-0 left-0 right-0 z-40 bg-white bg-opacity-90 backdrop-blur-md p-4 "
           >
             <input
               autoFocus
@@ -56,7 +56,7 @@ export default function SearchOverlay({
               {suggestions.map((s) => (
                 <div
                   key={s}
-                  className="py-1 px-2 text-white hover:bg-white/20 cursor-pointer rounded-md" // Adjusted hover color
+                  className="py-1 px-2  hover:bg-white/20 cursor-pointer rounded-md" // Adjusted hover color
                   onClick={() => setSearchTerm(s)}
                 >
                   {s}
@@ -68,13 +68,13 @@ export default function SearchOverlay({
                   href={`/shop/${p.id}`}
                   onClick={() => setSearchOpen(false)} // Close search on product click
                 >
-                  <div className="flex items-center gap-2 py-2 px-2 text-white hover:bg-white/20 cursor-pointer rounded-md">
+                  <div className="flex items-center gap-2 py-2 px-2  hover:bg-white/20 cursor-pointer rounded-md">
                     <Image
                       src={p.imageUrl}
                       alt={p.name}
                       width={40}
                       height={40}
-                      className="rounded object-cover"
+                      className="rounded object-cover aspect-square"
                     />
                     <span>{p.name}</span>
                   </div>
@@ -85,7 +85,7 @@ export default function SearchOverlay({
                   href={`/search/${encodeURIComponent(searchTerm)}`}
                   onClick={() => setSearchOpen(false)} // Close search on global search click
                 >
-                  <div className="py-2 px-2 text-white font-semibold hover:underline mt-2">
+                  <div className="py-2 px-2  font-semibold hover:underline mt-2">
                     Search for &quot;{searchTerm}&quot;
                   </div>
                 </Link>

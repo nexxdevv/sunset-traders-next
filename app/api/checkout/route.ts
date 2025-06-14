@@ -23,11 +23,19 @@ export async function POST(req: NextRequest) {
       userId: string
     }
 
-    // Basic check
+    // Basic validation
+    if (!userId) {
+      return NextResponse.json(
+        { error: "User ID is required" },
+        { status: 400 }
+      )
+    }
+
     if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
       return NextResponse.json({ error: "No items provided" }, { status: 400 })
     }
 
+    // Create the Stripe session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -39,14 +47,14 @@ export async function POST(req: NextRequest) {
             description: item.description,
             images: [item.imageUrl]
           },
-          unit_amount: Math.round((item.price ?? 0) * 100)
+          unit_amount: Math.round((item.price ?? 0) * 100) // Convert price to cents
         },
         quantity: item.quantity ?? 1
       })),
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`, // <-- IMPORTANT: Add ?session_id={CHECKOUT_SESSION_ID}
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cancel`,
       metadata: {
-        userId // Get this from Firebase auth context
+        userId // Pass userId to metadata
       }
     })
 
@@ -65,15 +73,15 @@ export async function GET(req: NextRequest) {
   const session_id = searchParams.get("session_id")
 
   if (!session_id) {
-    return new Response("Session ID required", { status: 400 })
+    return new Response("Session ID is required", { status: 400 })
   }
 
   try {
     const session = await stripe.checkout.sessions.retrieve(session_id, {
-      expand: ["line_items.price_data.product_data", "customer_details"]
+      expand: ["customer_details", "line_items"] // Expand necessary fields
     })
 
-    return Response.json(session)
+    return NextResponse.json(session)
   } catch (error) {
     console.error("Error fetching Stripe session:", error)
     return NextResponse.json(

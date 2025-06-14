@@ -16,6 +16,7 @@ const funnel_display = Funnel_Display({
 interface CartItem {
   id: string
   name: string
+  subtitle?: string
   price: number
   imageUrl: string
   quantity: number
@@ -46,7 +47,7 @@ export default function CartDrawer({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-[70px] z-30 bg-black/30 backdrop-blur-lg"
+            className="fixed inset-0 top-[69px] z-30 bg-black/30 backdrop-blur-lg"
             onClick={() => setCartOpen(false)}
           />
 
@@ -56,34 +57,34 @@ export default function CartDrawer({
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
             transition={{ type: "tween", ease: "easeInOut", duration: 0.2 }}
-            className="fixed top-[70px] right-0 h-[calc(100vh-70px)] w-[85%] max-w-md bg-merchant shadow-lg z-40 py-3  overflow-y-auto" // Added overflow-y-auto
+            className="fixed top-[70px] bg-white right-0 h-[calc(100vh-70px)] w-[85%] max-w-md z-40 py-3  overflow-y-auto" // Added overflow-y-auto
           >
             <div>
               <h1
-                className={`${funnel_display.className} text-3xl font-bold px-3 mb-6 text-white`}
+                className={`${funnel_display.className} text-3xl font-bold px-3 mb-6 text-gray-800`}
               >
                 Cart
               </h1>
 
               {cartItems.length === 0 ? (
-                <p className="text-center text-gray-200 text-lg">
-                  Your cart is empty.{" "}
+                <p className="px-3 text-gray-800 text-lg">
+                  Your cart is empty. <br />
                   <Link
                     href="/"
                     onClick={() => setCartOpen(false)}
-                    className="text-yellow-500 underline"
+                    className="text-merchant-accent underline"
                   >
                     Continue shopping
                   </Link>
                 </p>
               ) : (
-                <div className="grid grid-cols-1 gap-6">
+                <div className="grid grid-cols-1">
                   {/* Items Section */}
-                  <div className="space-y-4">
+                  <ul className="divide-y">
                     {cartItems.map((item) => (
-                      <div
+                      <li
                         key={item.id}
-                        className="flex flex-col justify-between w-full gap-2 bg-white dark:bg-gray-800 p-3 shadow-sm border border-gray-200 dark:border-gray-700"
+                        className="flex flex-col justify-between w-full gap-2 bg-white dark:bg-gray-800 p-3"
                       >
                         <div className="flex items-center justify-between">
                           <Image
@@ -91,34 +92,38 @@ export default function CartDrawer({
                             alt={item.name}
                             width={70}
                             height={70}
-                            className="rounded-lg object-cover w-16 h-16"
+                            className=" object-cover w-16 h-16"
                           />
                           <Button
                             variant="destructive" // Use a more appropriate variant for remove
                             size="sm"
                             onClick={() => removeItem(item.id)}
-                            className="text-xs ring-1 ring-gray-500/30 text-red-400"
+                            className="text-xs ring-1 rounded-none ring-gray-500/30 text-red-400"
                           >
                             Remove
                           </Button>
                         </div>
                         <div className="flex justify-between items-center mt-2">
-                          <h3 className="font-semibold text-gray-900 dark:text-white leading-tight text-base">
-                            {item.name}
-                          </h3>
+                          <div className="flex flex-col">
+                            <h3 className="font-semibold text-gray-900 dark:text-white leading-tight text-base">
+                              {item.name}
+                            </h3>
+                            {item.subtitle && (
+                              <h3 className="font-semibold text-gray-900 dark:text-white leading-tight text-base">
+                                {item?.subtitle}
+                              </h3>
+                            )}
+                          </div>
                           <p className="dark:text-gray-300 text-base font-semibold">
-                            ${item.price} x {item.quantity}
+                            ${item.price}
                           </p>
                         </div>
-                        <p className="text-right text-gray-700 dark:text-gray-400 text-sm">
-                          Subtotal: ${item.price * item.quantity}
-                        </p>
-                      </div>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
 
                   {/* Summary Section */}
-                  <div className="bg-gray-100 dark:bg-gray-700 p-6 shadow-md mt-6">
+                  <div className="bg-gray-100 dark:bg-gray-700 p-3 mt-6">
                     <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
                       Order Summary
                     </h2>

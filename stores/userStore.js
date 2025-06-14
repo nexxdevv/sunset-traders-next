@@ -2,24 +2,24 @@
 import { create } from "zustand"
 import { persist, createJSONStorage } from "zustand/middleware"
 
-
-
 export const useUserStore = create(
   persist(
     (set) => ({
       user: null, // Firebase user object
       isAuthenticated: false, // Initial state
-      savedProducts: [], 
+      savedProducts: [],
 
       setUser: (userData) =>
         set({ user: userData, isAuthenticated: !!userData }),
-      addSavedProduct: (productId) =>
+      addSavedProduct: (product) =>
         set((state) => ({
-          savedProducts: [...state.savedProducts, productId]
+          savedProducts: [...state.savedProducts, product]
         })),
       removeSavedProduct: (productId) =>
         set((state) => ({
-          savedProducts: state.savedProducts.filter((id) => id !== productId)
+          savedProducts: state.savedProducts.filter(
+            (product) => product.id !== productId
+          )
         })),
       clearSavedProducts: () => set({ savedProducts: [] }),
       logout: () =>
