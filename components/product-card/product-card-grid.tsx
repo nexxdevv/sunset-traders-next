@@ -63,7 +63,7 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
             savedProducts.some(
               (savedProduct: Product) => savedProduct.id === product.id
             )
-              ? "bg-black border-black/50 text-white font-[600]"
+              ? "bg-red-500 border-red-500/50 text-white font-[600]"
               : "bg-white text-gray-700/90 font-[500]"
           }`}
         >
@@ -88,7 +88,7 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
         <div className="flex justify-between items-center w-full mt-2">
           <div className="relative">
             <p
-              className={`${tsukimi.className}text-gray-800 font-[500] text-[17px] dark:text-gray-400`}
+              className={`${tsukimi.className}text-gray-800 dark:text-gray-200 font-[500] text-[17px]`}
             >
               ${product.price}
             </p>

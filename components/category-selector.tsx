@@ -56,8 +56,8 @@ export default function CategorySelector({
             className={cn(
               `${luckSpace_Grotesk.className} tracking-wider uppercase cursor-pointer px-4 py-1.5  text-[15px] whitespace-nowrap font-[600] transition-all duration-300`,
               isActive
-                ? "bg-merchant-accent  "
-                : "bg-white text-gray-800"
+                ? "bg-merchant-accent  text-gray-800"
+                : "bg-white dark:bg-dark dark:text-white text-gray-800"
             )}
           >
             {category}

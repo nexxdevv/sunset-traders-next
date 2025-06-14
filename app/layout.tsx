@@ -6,7 +6,6 @@ import { auth } from "@/lib/firebase"
 import { useUserStore } from "@/stores/userStore"
 import TopNav from "@/components/mobile/top-nav"
 
-
 export default function RootLayout({
   children
 }: {
@@ -20,7 +19,7 @@ export default function RootLayout({
   }, [])
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="dark:bg-dark bg-white antialiased scrollbar-hide">
+      <body className="dark:bg-dark dark:text-white  antialiased scrollbar-hide">
         <TopNav />
         {children}
       </body>

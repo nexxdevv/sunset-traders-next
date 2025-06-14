@@ -16,7 +16,7 @@ type Order = {
   id: string
   items: {
     name: string
-    subtitle?: string
+    description?: string
     quantity: number
     price: number
     image: string
@@ -60,30 +60,31 @@ const OrdersPage = () => {
           You haven’t placed any orders yet.
         </p>
       ) : (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-1">
           {orders.map((order) => (
-            <div
-              key={order.id}
-              className="border rounded-xl p-4 flex items-center gap-4 shadow-sm"
-            >
+            <div key={order.id} className=" flex items-center gap-4 ">
               <Image
                 src={order.items[0].image || "/placeholder.png"}
                 alt={order.items[0].name || "Product image"}
                 width={80}
                 height={80}
-                className="rounded-lg object-cover"
+                className=" object-cover"
               />
               <div className="flex-1">
                 <h2 className="text-lg font-semibold">{order.items[0].name}</h2>
-                {order.items[0].subtitle && (
-                  <p className="text-sm text-gray-500">
-                    {order.items[0].subtitle}
+                {order.items[0].description && (
+                  <p className="text-sm text-gray-500 dark:text-gray-200">
+                    {order.items[0].description}
                   </p>
                 )}
-                <p className="text-md text-gray-800 mt-1">${order.total}</p>
+                <p className="text-md text-gray-800 dark:text-white mt-1">
+                  ${order.total}
+                </p>
               </div>
               <div className="text-right">
-                <p className="text-sm font-medium text-gray-600">Status:</p>
+                <p className="text-sm font-medium text-gray-600 dark:text-white">
+                  Status:
+                </p>
                 <p className="text-sm font-semibold text-yellow-600">
                   {order.status || "Processing"}
                 </p>

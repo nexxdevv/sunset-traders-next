@@ -57,17 +57,17 @@ export default function CartDrawer({
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
             transition={{ type: "tween", ease: "easeInOut", duration: 0.2 }}
-            className="fixed top-[70px] bg-white right-0 h-[calc(100vh-70px)] w-[85%] max-w-md z-40 py-3  overflow-y-auto" // Added overflow-y-auto
+            className="fixed top-[69px] bg-white dark:bg-dark right-0 h-[calc(100vh-70px)] w-[85%] max-w-md z-40 py-3  overflow-y-auto" // Added overflow-y-auto
           >
             <div>
               <h1
-                className={`${funnel_display.className} text-3xl font-bold px-3 mb-6 text-gray-800`}
+                className={`${funnel_display.className} text-3xl font-bold px-3 mb-6 text-gray-800 dark:text-gray-200`}
               >
                 Cart
               </h1>
 
               {cartItems.length === 0 ? (
-                <p className="px-3 text-gray-800 text-lg">
+                <p className="px-3 text-gray-800 dark:text-gray-200 dark text-lg">
                   Your cart is empty. <br />
                   <Link
                     href="/"

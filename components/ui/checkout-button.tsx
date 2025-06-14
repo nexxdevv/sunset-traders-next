@@ -8,6 +8,7 @@ import { useUserStore } from "@/stores/userStore"
 interface CartItem {
   id: string // Or whatever your product ID is
   name: string
+  subtitle?: string
   price: number
   imageUrl: string // Must be a public URL
   quantity: number // If you want to support multiple quantities

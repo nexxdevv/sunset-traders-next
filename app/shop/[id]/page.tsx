@@ -61,7 +61,7 @@ export default function ProductDetailPage({
 
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 text-gray-700">
+      <div className="min-h-screen flex items-center justify-center  ">
         <p className="text-xl font-semibold">Loading product...</p>
       </div>
     )
@@ -110,7 +110,7 @@ export default function ProductDetailPage({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
-      className="min-h-screen text-gray-800 pt-[70px]"
+      className="min-h-screen pt-[70px]"
     >
       {/* Top Bar */}
 
@@ -119,7 +119,7 @@ export default function ProductDetailPage({
         {/* Main Image */}
         <div
           {...swipeHandlers}
-          className="relative w-full h-[50vh] overflow-hidden bg-gray-200 cursor-pointer"
+          className="relative w-full h-[50vh] overflow-hidden  cursor-pointer"
           onClick={openModal}
         >
           <Image
@@ -138,7 +138,7 @@ export default function ProductDetailPage({
                 }}
                 className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/70 rounded-full shadow hover:bg-white"
               >
-                <ChevronLeft className="w-6 h-6 text-gray-700" />
+                <ChevronLeft className="w-6 h-6 " />
               </button>
               <button
                 onClick={(e) => {
@@ -147,12 +147,12 @@ export default function ProductDetailPage({
                 }}
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/70 rounded-full shadow hover:bg-white"
               >
-                <ChevronRight className="w-6 h-6 text-gray-700" />
+                <ChevronRight className="w-6 h-6 " />
               </button>
             </>
           )}
         </div>
-        <div className="flex px-3 pt-1 gap-1 text-gray-800">
+        <div className="flex px-3 pt-1 gap-1 ">
           <button
             onClick={() => saveProductToggle(product)}
             type="button"
@@ -161,7 +161,7 @@ export default function ProductDetailPage({
                 (savedProduct: Product) => savedProduct.id === product.id
               )
                 ? "bg-black border-black/50 text-white"
-                : "bg-white"
+                : "bg-white text-gray-800"
             }`}
           >
             <span
@@ -170,7 +170,7 @@ export default function ProductDetailPage({
                   (savedProduct: Product) => savedProduct.id === product.id
                 )
                   ? "text-white font-[600]"
-                  : "text-gray-700/90"
+                  : "/90"
               }`}
             >
               {savedProducts.some(
@@ -186,19 +186,19 @@ export default function ProductDetailPage({
             className={`border  px-2 py-1.5 flex items-center transition-colors duration-300 justify-center gap-2 flex-1  cursor-pointer whitespace-nowrap font-[500] ${
               isInCart
                 ? "bg-merchant-accent border-merchant-accent "
-                : " text-gray-800"
+                : " text-gray-800 bg-white"
             }`}
           >
-            <ShoppingCart size={22} />
+            <ShoppingCart size={22} className="shrink-0 text-gray-800" />
           </button>
         </div>
       </div>
 
       {/* Details */}
-      <div className="p-3 dark:bg-dark rounded-t-xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
+      <div className="p-3  rounded-t-xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
         <div className="flex flex-col-reverse gap-3 justify-between   mb-4">
           <div>
-            <p className="text-xs uppercase text-gray-700 font-semibold">
+            <p className="text-xs uppercase  font-semibold">
               {product.category}
             </p>
             <h2 className="text-2xl font-semibold leading-tight">
@@ -211,7 +211,7 @@ export default function ProductDetailPage({
               <p className="text-2xl mt-1 font-semibold">${product.price}</p>
               {product?.ogPrice && (
                 <div className="bg-merchant-accent ml-2 translate-y-0.5">
-                  <p className="text-lg scale-[0.85] font-semibold">
+                  <p className="text-lg scale-[0.85] text-gray-800 font-semibold">
                     ${product?.ogPrice} <span className="text-xs">MSRP</span>
                   </p>
                 </div>

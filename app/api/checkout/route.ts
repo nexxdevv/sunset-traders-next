@@ -9,10 +9,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 interface CartItem {
   id: string
   name: string
+  subtitle?: string
   price: number // Use this for unit_amount
   imageUrl: string // Use this for product_data.images
   quantity: number
-  description?: string // Optional: Add if you want to send a description
 }
 
 export async function POST(req: NextRequest) {
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
           currency: "usd",
           product_data: {
             name: item.name,
-            description: item.description,
+            description: item.subtitle ?? undefined,
             images: [item.imageUrl]
           },
           unit_amount: Math.round((item.price ?? 0) * 100) // Convert price to cents

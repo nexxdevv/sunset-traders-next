@@ -103,8 +103,8 @@ export default function TopNav() {
 
   return (
     <header
-      className="fixed top-0 z-[80] w-full h-[70px] flex items-center justify-between bg-white 
-             
+      className="fixed top-0 z-[80] w-full h-[70px] flex items-center justify-between  
+             bg-white dark:bg-dark
              px-4"
     >
       {/* Left: Menu Button */}
@@ -113,15 +113,11 @@ export default function TopNav() {
         className=" md:hidden cursor-pointer"
         aria-label="Toggle Menu"
       >
-        {menuOpen ? (
-          <X size={30} className="text-gray-800" />
-        ) : (
-          <Menu size={30} className="text-gray-800" />
-        )}
+        {menuOpen ? <X size={30} /> : <Menu size={30} />}
       </button>
 
       {/* Center: Logo */}
-      <div className="absolute text-gray-800 left-1/2 transform text-center -translate-x-1/2 -translate-y-[8px]">
+      <div className="absolute left-1/2 transform text-center -translate-x-1/2 -translate-y-[8px]">
         <Link href="/" className="relative block h-full w-full">
           <div className="relative inline-block">
             <h1
@@ -145,10 +141,10 @@ export default function TopNav() {
           onClick={openSearch}
           aria-label="Search"
         >
-          <Search size={23} className="text-gray-800" />
+          <Search size={23} />
         </button>
         <button onClick={toggleCart} aria-label="Cart" className="relative">
-          <ShoppingCart size={23} className="text-gray-800 cursor-pointer" />
+          <ShoppingCart size={23} className="cursor-pointer" />
           <AnimatePresence>
             {cartItems.length > 0 && (
               <motion.span
@@ -157,7 +153,7 @@ export default function TopNav() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className={`absolute -bottom-2 cursor-pointer -right-2.5 bg-merchant-accent  text-xs rounded-full w-5 h-5 flex items-center  justify-center font-bold scale-[.9] ring-2 ring-gray-800/90`}
+                className={`absolute -bottom-2 cursor-pointer -right-2.5 bg-merchant-accent text-gray-800  text-xs rounded-full w-5 h-5 flex items-center  justify-center font-bold scale-[.9] shadow-sm`}
               >
                 {cartItems.length}
               </motion.span>

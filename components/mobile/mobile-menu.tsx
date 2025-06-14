@@ -50,7 +50,7 @@ export default function MobileMenu({
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "easeOut", duration: 0.3 }} // Smoother transition
-            className={`fixed top-[70px] left-0 h-[calc(100vh-70px)] w-[85%] bg-white shadow-xl z-40 md:hidden ${inter.variable} font-sans`}
+            className={`fixed top-[69px] left-0 h-[calc(100vh-70px)] w-[85%] bg-white dark:bg-dark shadow-xl z-40 md:hidden ${inter.variable} font-sans`}
           >
             {/* Menu Content */}
             <div className="relative z-10 w-full h-full flex flex-col justify-between py-8 px-6">
@@ -64,10 +64,10 @@ export default function MobileMenu({
                       height={70}
                       className="rounded-full object-cover mb-4 border border-gray-200"
                     />
-                    <p className="text-xl font-semibold text-gray-800 text-center">
+                    <p className="text-xl font-semibold text-gray-800 dark:text-white text-center">
                       {user.displayName || "User"}
                     </p>
-                    <p className="text-sm text-gray-500 text-center">
+                    <p className="text-sm text-gray-500 dark:text-white text-center">
                       {user.email}
                     </p>
                   </div>
@@ -76,7 +76,7 @@ export default function MobileMenu({
                       <li>
                         <Link
                           href="/orders"
-                          className="block text-lg text-gray-700 font-medium py-3 px-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                          className="block text-lg text-gray-700 dark:text-white font-medium py-3 px-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
                           onClick={() => setMenuOpen(false)}
                         >
                           Orders
@@ -85,7 +85,7 @@ export default function MobileMenu({
                       <li>
                         <Link
                           href="/saved"
-                          className="block text-lg text-gray-700 font-medium py-3 px-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                          className="block text-lg text-gray-700 dark:text-white font-medium py-3 px-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
                           onClick={() => setMenuOpen(false)}
                         >
                           Saved Items
@@ -94,7 +94,7 @@ export default function MobileMenu({
                       <li>
                         <Link
                           href="/settings" // Added a settings link for completeness
-                          className="block text-lg text-gray-700 font-medium py-3 px-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                          className="block text-lg text-gray-700 dark:text-white font-medium py-3 px-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
                           onClick={() => setMenuOpen(false)}
                         >
                           Settings
@@ -104,7 +104,7 @@ export default function MobileMenu({
                   </nav>
                   <button
                     onClick={handleSignOut}
-                    className="w-full mt-6 flex items-center justify-center bg-gray-100 text-gray-700 font-medium py-3 px-6 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    className="w-full mt-6 flex items-center justify-center bg-gray-100 text-gray-700 dark:text-gray-800 font-medium py-3 px-6 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
                   >
                     Sign Out
                   </button>
