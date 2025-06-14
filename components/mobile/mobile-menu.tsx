@@ -6,17 +6,11 @@ import Link from "next/link"
 import Image from "next/image"
 import { FcGoogle } from "react-icons/fc"
 import { User } from "firebase/auth"
-import { Shizuru } from "next/font/google"
-import { Rubik_Glitch } from "next/font/google"
+import { Inter } from "next/font/google" // Using Inter for a clean, modern sans-serif look
 
-const shizShizuru = Shizuru({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400"]
-})
-
-const rubik_glitch = Rubik_Glitch({
-  subsets: ["latin"],
-  weight: ["400"]
+  variable: "--font-inter"
 })
 
 interface MobileMenuProps {
@@ -38,120 +32,101 @@ export default function MobileMenu({
     <AnimatePresence>
       {menuOpen && (
         <>
+          {/* Underlay with more subtle backdrop blur */}
           <motion.div
             key="menu-underlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-[69px] bg-black/30 backdrop-blur-lg z-30 md:hidden"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 top-[69px] bg-black/20 backdrop-blur-md z-30 md:hidden"
             onClick={() => setMenuOpen(false)}
           />
 
+          {/* Mobile Menu Panel */}
           <motion.div
             key="mobile-menu"
-            initial={{ x: "-100%", opacity: 0.8 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "-100%", opacity: 0.9 }}
-            transition={{ type: "tween", ease: "easeInOut", duration: 0.2 }}
-            // You might want to adjust the background and backdrop-filter for the image effect
-            className="fixed top-[70px] left-0 h-[calc(100vh-70px)] w-[90%]   z-40 md:hidden"
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ type: "easeOut", duration: 0.3 }} // Smoother transition
+            className={`fixed top-[70px] left-0 h-[calc(100vh-70px)] w-[85%] bg-white shadow-xl z-40 md:hidden ${inter.variable} font-sans`}
           >
-            {/* Background Image Container for the menu */}
-            <div
-              className="absolute inset-0 z-0"
-              style={{
-                backgroundImage: `url('https://res.cloudinary.com/cloud-x/image/upload/v1749705411/sunset-triangle_zxolkp.png')`,
-                backgroundSize: "cover",
-                backgroundPosition: "center"
-              }}
-            />
-
-            {/* Menu Content with backdrop-filter */}
-            <div className="relative z-10  w-full mx-auto h-full flex bg-white/10 backdrop-blur-sm flex-col justify-between pb-6  ">
+            {/* Menu Content */}
+            <div className="relative z-10 w-full h-full flex flex-col justify-between py-8 px-6">
               {user ? (
                 <>
-                  <div className="w-ful  flex flex-col items-center justify-center p-4">
+                  <div className="flex flex-col items-center justify-center mb-8">
                     <Image
-                      src={user.photoURL || "https://via.placeholder.com/150"} // Use user's photoURL or a placeholder
+                      src={user.photoURL || "https://via.placeholder.com/150"}
                       alt={user.displayName || "User Avatar"}
-                      width={100}
-                      height={100}
-                      className="rounded-full object-cover mx-auto mb-2 border-2 border-white"
+                      width={70}
+                      height={70}
+                      className="rounded-full object-cover mb-4 border border-gray-200"
                     />
-                    <p className="text-white text-lg font-semibold">
+                    <p className="text-xl font-semibold text-gray-800 text-center">
                       {user.displayName || "User"}
                     </p>
+                    <p className="text-sm text-gray-500 text-center">
+                      {user.email}
+                    </p>
                   </div>
-                  <ul className="mb-8 px-4 flex flex-col gap-2  uppercase">
-                    {" "}
-                    {/* flex-grow to push sign-out to bottom */}
-                    <li>
-                      <Link
-                        href="/account"
-                        className="block text-2xl font-medium text-white py-4 px-4  duration-200 ease-in-out transform hover:translate-x-1 rounded-t-lg"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Account
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/orders"
-                        className="block text-2xl font-medium text-white py-4 px-4  duration-200 ease-in-out transform hover:translate-x-1"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Orders
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/saved"
-                        className="block text-2xl font-medium text-white py-4 px-4  duration-200 ease-in-out transform hover:translate-x-1"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        Saved Items
-                      </Link>
-                    </li>
-                  </ul>
+                  <nav className="flex-grow">
+                    <ul className="flex flex-col gap-1">
+                      <li>
+                        <Link
+                          href="/orders"
+                          className="block text-lg text-gray-700 font-medium py-3 px-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          Orders
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/saved"
+                          className="block text-lg text-gray-700 font-medium py-3 px-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          Saved Items
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/settings" // Added a settings link for completeness
+                          className="block text-lg text-gray-700 font-medium py-3 px-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          Settings
+                        </Link>
+                      </li>
+                    </ul>
+                  </nav>
                   <button
                     onClick={handleSignOut}
-                    className="w-full mt-auto inline-flex items-center justify-center bg-red-400/80 backdrop-blur-sm text-white font-semibold py-3 px-6 text-lg shadow-md hover:bg-red-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-300 gap-2"
+                    className="w-full mt-6 flex items-center justify-center bg-gray-100 text-gray-700 font-medium py-3 px-6 rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
                   >
                     Sign Out
                   </button>
                 </>
               ) : (
-                <div className="text-white  flex flex-col justify-start h-full px-3 max-w-sm">
-                  <div className="scale-[.9]">
-                    <h1
-                      className={`${shizShizuru.className} text-[60px] font-bold rotate-[-9deg] mb-2 leading-[1.1] uppercase`}
-                    >
-                      Looney Mike&apos;s
-                    </h1>
-                    <h1
-                      className={`${rubik_glitch.className} text-[56px] font-bold mb-8 leading-[1.1] uppercase`}
-                    >
-                      Digital Imporium
-                    </h1>
-                  </div>
-                  <p className="text-lg mb-10 leading-snug">
-                    Continue with Google if it was good for you ya greaseball
-                    cocksucka mothafucka.
+                <div className="flex flex-col  h-full pt-4 pb-6">
+                  <p className=" text-gray-500 text-xl font-[500] mb-4">
+                    Sign in to purchase or save items in the store.
                   </p>
                   <button
                     onClick={handleGoogleSignIn}
-                    className="inline-flex items-center justify-center bg-white text-merchant font-semibold py-3 px-6 rounded-full text-lg shadow-md hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300 gap-2 max-w-xs"
+                    className="w-full inline-flex items-center justify-center bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300 gap-3"
                   >
-                    <FcGoogle size={28} />
+                    <FcGoogle size={24} />
                     Continue with Google
                   </button>
-                  <footer className="mt-4">
-                    <p className="text-sm text-gray-200">
+                  <footer className=" pt-3">
+                    <p className="text-xs text-gray-500 leading-normal">
                       By signing in, you agree to our{" "}
                       <Link
                         href="/terms"
-                        className="text-yellow-400 hover:underline"
+                        className="text-blue-600 hover:underline"
                         onClick={() => setMenuOpen(false)}
                       >
                         Terms of Service
@@ -159,12 +134,12 @@ export default function MobileMenu({
                       and{" "}
                       <Link
                         href="/privacy"
-                        className="text-yellow-400 hover:underline"
+                        className="text-blue-600 hover:underline"
                         onClick={() => setMenuOpen(false)}
                       >
                         Privacy Policy
                       </Link>
-                      . And if you say anything there go ya legs.
+                      .
                     </p>
                   </footer>
                 </div>

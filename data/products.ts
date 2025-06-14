@@ -90,7 +90,7 @@ export const products: Product[] = [
   },
   {
     id: "13",
-    name: "Leather Boots",
+    name: "World War II Infantry",
     price: 100,
     description:
       "Genuine leather boots with minimal wear. Perfect for any occasion.",

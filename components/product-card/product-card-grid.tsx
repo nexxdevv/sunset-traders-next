@@ -59,12 +59,12 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
         <button
           onClick={() => saveProductToggle(product)}
           type="button"
-          className={`border px-2 transition-colors duration-300 font-[500] py-1.5 cursor-pointer flex items-center justify-center w-1/2 -translate-y-5 ml-auto text-sm ${
+          className={`border px-2 transition-all duration-300 py-1.5 cursor-pointer flex items-center justify-center w-1/2 -translate-y-5 ml-auto text-sm ${
             savedProducts.some(
               (savedProduct: Product) => savedProduct.id === product.id
             )
-              ? "bg-black border-black/50 text-white"
-              : "bg-white"
+              ? "bg-black border-black/50 text-white font-[600]"
+              : "bg-white text-gray-700/90 font-[500]"
           }`}
         >
           <span>

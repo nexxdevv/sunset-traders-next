@@ -50,7 +50,7 @@ export function useAuth() {
     try {
       await signInWithPopup(auth, provider);
       // No need to set menuOpen here, parent component will handle it
-      router.push("/account"); // Redirect to account page after sign in
+      router.push("/"); // Redirect to account page after sign in
     } catch (error) {
       if (error instanceof Error) {
         console.error("Error signing in with Google:", error.message);

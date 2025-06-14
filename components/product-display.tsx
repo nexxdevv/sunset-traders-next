@@ -19,7 +19,7 @@ export default function ProductDisplay({
       : products.filter((product) => product.category === selectedCategory)
 
   return (
-    <div className="relative min-h-screen pt-[115px] text-gray-900 p-3 scrollbar-hide z-50 w-full">
+    <div className="relative min-h-screen pt-[115px] text-gray-900 px-2 py-3 scrollbar-hide z-50 w-full">
       <div className="mb-4 flex justify-end w-full">
         <p className="dark:text-gray-400 text-gray-900/70 text-sm">
           {filteredProducts.length}{" "}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { db } from "@/lib/firebase"
 import { collection, addDoc } from "firebase/firestore"
+import { useCartStore } from "@/stores/cartStore"
 
 type LineItem = {
   description: string
@@ -21,6 +22,8 @@ export default function SuccessPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [orderSavedSuccessfully, setOrderSavedSuccessfully] = useState(false)
+
+  const { clearCart } = useCartStore()
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -55,7 +58,8 @@ export default function SuccessPage() {
         await addDoc(collection(db, "orders"), order)
 
         setOrderSavedSuccessfully(true)
-        router.push("/account")
+        clearCart()
+        router.push("/orders")
       } catch (error) {
         console.error("Failed to save order:", error)
         setOrderSavedSuccessfully(false)
@@ -65,7 +69,7 @@ export default function SuccessPage() {
     }
 
     fetchAndSaveOrder()
-  }, [sessionId, router])
+  }, [sessionId, router, clearCart])
 
   return (
     <div className="p-6 text-center">

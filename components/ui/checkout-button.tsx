@@ -1,6 +1,5 @@
 "use client"
 
-import { auth } from "@/lib/firebase"
 import { useState } from "react"
 import getStripe from "@/lib/get-stripejs"
 import { FaStripe } from "react-icons/fa6"
@@ -23,18 +22,11 @@ export default function CheckoutButton({
   const [isLoading, setIsLoading] = useState(false)
   const handleCheckout = async () => {
     try {
-      const userId = auth.currentUser?.uid
-      if (!userId) {
-        alert("Please log in to proceed with checkout.")
-        return // Exit if no user
-      }
-
       const res = await fetch("/api/checkout", {
         method: "POST",
         body: JSON.stringify({ cartItems, userId: user.uid })
       })
       const data = await res.json()
-      console.log("Checkout response:", data)
 
       if (!res.ok || data.error) {
         console.error("API error:", data.error)

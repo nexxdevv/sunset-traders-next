@@ -78,7 +78,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const session = await stripe.checkout.sessions.retrieve(session_id, {
-      expand: ["customer_details", "line_items"] // Expand necessary fields
+      expand: ["customer_details", "line_items.data.price.product"] // Expand necessary fields
     })
 
     return NextResponse.json(session)

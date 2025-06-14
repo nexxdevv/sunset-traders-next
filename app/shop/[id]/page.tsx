@@ -152,7 +152,7 @@ export default function ProductDetailPage({
             </>
           )}
         </div>
-        <div className="flex px-3 gap-1 text-gray-800">
+        <div className="flex px-3 pt-1 gap-1 text-gray-800">
           <button
             onClick={() => saveProductToggle(product)}
             type="button"
@@ -164,7 +164,15 @@ export default function ProductDetailPage({
                 : "bg-white"
             }`}
           >
-            <span>
+            <span
+              className={`${
+                savedProducts.some(
+                  (savedProduct: Product) => savedProduct.id === product.id
+                )
+                  ? "text-white font-[600]"
+                  : "text-gray-700/90"
+              }`}
+            >
               {savedProducts.some(
                 (savedProduct: Product) => savedProduct.id === product.id
               )
@@ -190,10 +198,13 @@ export default function ProductDetailPage({
       <div className="p-3 dark:bg-dark rounded-t-xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
         <div className="flex flex-col-reverse gap-3 justify-between   mb-4">
           <div>
+            <p className="text-xs uppercase text-gray-700 font-semibold">
+              {product.category}
+            </p>
             <h2 className="text-2xl font-semibold leading-tight">
               {product.name}
             </h2>
-            <h2 className="text-xl font-semibold leading-tight">
+            <h2 className="text-lg font-semibold leading-tight">
               {product?.subtitle}
             </h2>
             <div className="flex items-center mt-2 w-full ">

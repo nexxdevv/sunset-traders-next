@@ -105,7 +105,7 @@ export default function TopNav() {
     <header
       className="fixed top-0 z-[80] w-full h-[70px] flex items-center justify-between bg-white 
              
-             px-3"
+             px-4"
     >
       {/* Left: Menu Button */}
       <button
@@ -157,7 +157,7 @@ export default function TopNav() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className={`absolute -bottom-2  -right-2.5 bg-merchant-accent  text-xs rounded-full w-5 h-5 flex items-center  justify-center font-bold scale-[.9] `}
+                className={`absolute -bottom-2 cursor-pointer -right-2.5 bg-merchant-accent  text-xs rounded-full w-5 h-5 flex items-center  justify-center font-bold scale-[.9] ring-2 ring-gray-800/90`}
               >
                 {cartItems.length}
               </motion.span>
