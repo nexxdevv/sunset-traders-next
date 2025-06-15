@@ -152,15 +152,15 @@ export default function ProductDetailPage({
             </>
           )}
         </div>
-        <div className="flex px-3 pt-1 gap-1 ">
+        <div className="flex px-3 pt-1 gap-1 -translate-y-8">
           <button
             onClick={() => saveProductToggle(product)}
             type="button"
-            className={`border px-2 font-[500] py-1.5 cursor-pointer flex transition-colors duration-300 items-center justify-center w-1/2 text-sm ${
+            className={`border px-2 font-[500] py-1.5 cursor-pointer shadow-md flex transition-all duration-300 items-center justify-center w-1/2  ${
               savedProducts.some(
                 (savedProduct: Product) => savedProduct.id === product.id
               )
-                ? "bg-black border-black/50 text-white"
+                ? "bg-red-500 border-red-500/50 text-white"
                 : "bg-white text-gray-800"
             }`}
           >
@@ -183,7 +183,7 @@ export default function ProductDetailPage({
           <button
             onClick={handleAddToCart}
             type="button"
-            className={`border  px-2 py-1.5 flex items-center transition-colors duration-300 justify-center gap-2 flex-1  cursor-pointer whitespace-nowrap font-[500] ${
+            className={`border  px-2 py-1.5 flex shadow-md items-center transition-colors duration-300 justify-center gap-2 flex-1  cursor-pointer whitespace-nowrap font-[500] ${
               isInCart
                 ? "bg-merchant-accent border-merchant-accent "
                 : " text-gray-800 bg-white"
@@ -195,18 +195,20 @@ export default function ProductDetailPage({
       </div>
 
       {/* Details */}
-      <div className="p-3  rounded-t-xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
-        <div className="flex flex-col-reverse gap-3 justify-between   mb-4">
+      <div className="p-3 -translate-y-5 rounded-t-xl h-[50vh] shadow-lg md:mx-auto md:max-w-3xl">
+        <div className="flex flex-col-reverse  gap-3 justify-between   mb-4">
           <div>
-            <p className="text-xs uppercase  font-semibold">
+            <p className="text-xs uppercase  font-semibold opacity-70">
               {product.category}
             </p>
-            <h2 className="text-2xl font-semibold leading-tight">
-              {product.name}
-            </h2>
-            <h2 className="text-lg font-semibold leading-tight">
-              {product?.subtitle}
-            </h2>
+            <div className="">
+              <h2 className="text-2xl font-semibold leading-tight">
+                {product.name}
+              </h2>
+              <h2 className="text-lg font-semibold leading-tight">
+                {product?.subtitle}
+              </h2>
+            </div>
             <div className="flex items-center mt-2 w-full ">
               <p className="text-2xl mt-1 font-semibold">${product.price}</p>
               {product?.ogPrice && (

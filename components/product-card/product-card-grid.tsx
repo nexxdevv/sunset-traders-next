@@ -40,7 +40,7 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
         delay: index * 0.1,
         staggerChildren: 0.1
       }}
-      className="overflow-hidden  w-full h-full flex flex-col"
+      className="overflow-hidden  w-full h-full flex flex-col "
     >
       <Link
         href={`/shop/${product.id}`}
@@ -55,11 +55,11 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
         />
       </Link>
 
-      <div className="flex flex-col justify-between flex-grow pb-3 px-1 pt-1 gap-2">
+      <div className="flex flex-col justify-between flex-grow pb-3 px-1 pt-1 gap-3">
         <button
           onClick={() => saveProductToggle(product)}
           type="button"
-          className={`border px-2 transition-all duration-300 py-1.5 cursor-pointer flex items-center justify-center w-1/2 -translate-y-5 ml-auto text-sm ${
+          className={`border px-2 transition-all duration-300 py-1.5 cursor-pointer flex items-center justify-center w-1/2 -translate-y-5 ml-auto text-sm shadow-sm ${
             savedProducts.some(
               (savedProduct: Product) => savedProduct.id === product.id
             )
@@ -75,30 +75,32 @@ export default function ProductCardGrid({ product, index }: ProductCardProps) {
               : "Save"}
           </span>
         </button>
-        <div className="flex flex-col">
-          <h3 className="font-semibold -mt-2 text-gray-800 w-full leading-tight dark:text-white">
-            {product.name}
-          </h3>
-          {product.subtitle && (
-            <h4 className="font-semibold text-gray-800 w-full leading-tight text-sm dark:text-white">
-              {product?.subtitle}
-            </h4>
-          )}
-        </div>
-        <div className="flex justify-between items-center w-full mt-2">
-          <div className="relative">
-            <p
-              className={`${tsukimi.className}text-gray-800 dark:text-gray-200 font-[500] text-[17px]`}
-            >
-              ${product.price}
-            </p>
+        <div className="flex flex-col justify-between gap-4 -mt-4">
+          <div className="flex flex-col h-full">
+            <h3 className="font-semibold  text-gray-800 w-full leading-tight dark:text-white">
+              {product.name}
+            </h3>
+            {product.subtitle && (
+              <h4 className="font-semibold text-gray-800 w-full leading-tight text-sm dark:text-white">
+                {product?.subtitle}
+              </h4>
+            )}
           </div>
-          <Link
-            href={`/shop/${product.id}`}
-            className=" px-3 py-1.5  cursor-pointer bg-merchant-accent flex items-center justify-center gap-2 w-auto ml-auto text-sm  font-[500]"
-          >
-            More details
-          </Link>
+          <div className="flex justify-between items-center w-full">
+            <div className="relative">
+              <p
+                className={`${tsukimi.className}text-gray-800 dark:text-gray-200 font-[500] text-[17px]`}
+              >
+                ${product.price}
+              </p>
+            </div>
+            <Link
+              href={`/shop/${product.id}`}
+              className=" px-3 py-1.5  cursor-pointer bg-merchant-accent flex items-center justify-center gap-2 w-auto ml-auto text-sm  font-[500]"
+            >
+              More details
+            </Link>
+          </div>
         </div>
       </div>
     </motion.div>
