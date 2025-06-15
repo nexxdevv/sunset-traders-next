@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation" // Import useRouter for navigation
 import { useCartStore } from "@/stores/cartStore"
+import { motion } from "framer-motion"
 
 import { Funnel_Display } from "next/font/google"
 const funnel_display = Funnel_Display({
@@ -31,7 +32,13 @@ export default function SavedItemsPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto h-screen px-3 py-20">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+      className="max-w-6xl mx-auto h-screen px-3 py-20"
+    >
       <h1 className={`${funnel_display.className} text-3xl font-bold mb-6`}>
         Saved
       </h1>
@@ -41,14 +48,14 @@ export default function SavedItemsPage() {
         </p>
       ) : (
         <div
-          className={`grid gap-1 ${
+          className={`grid gap-1 items-stretch ${
             savedProducts.length === 1 ? "grid-cols-1" : "grid-cols-2"
           }`}
         >
           {" "}
           {/* Increased gap for better spacing */}
           {savedProducts.map((product: Product, index: number) => (
-            <div key={index} className=" overflow-hidden w-full">
+            <div key={index} className=" overflow-hidden w-full h-full">
               <Link href={`/shop/${product.id}`} className="block w-full">
                 <div
                   className="relative w-full"
@@ -98,6 +105,6 @@ export default function SavedItemsPage() {
           ))}
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }

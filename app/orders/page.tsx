@@ -6,6 +6,7 @@ import { collection, query, where, getDocs } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import { useUserStore } from "@/stores/userStore"
 import Image from "next/image"
+import { motion } from "framer-motion"
 
 const funnel_display = Funnel_Display({
   subsets: ["latin"],
@@ -50,7 +51,14 @@ const OrdersPage = () => {
   }, [user])
 
   return (
-    <div className="max-w-6xl mx-auto px-3 py-20">
+    <motion.div
+      key="orders"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+      className="max-w-6xl mx-auto px-3 py-20"
+    >
       <h1 className={`${funnel_display.className} text-3xl font-bold mb-6`}>
         Orders
       </h1>
@@ -93,7 +101,7 @@ const OrdersPage = () => {
           ))}
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
 

@@ -87,23 +87,32 @@ export default function CartDrawer({
                         className="flex flex-col justify-between w-full gap-2 bg-white dark:bg-gray-800 p-3"
                       >
                         <div className="flex items-center justify-between">
-                          <Image
-                            src={item.imageUrl || "/placeholder.png"}
-                            alt={item.name}
-                            width={70}
-                            height={70}
-                            className=" object-cover w-16 h-16"
-                          />
+                          <Link
+                            href={`/shop/${item.id}`}
+                            onClick={() => setCartOpen(false)}
+                          >
+                            <Image
+                              src={item.imageUrl || "/placeholder.png"}
+                              alt={item.name}
+                              width={70}
+                              height={70}
+                              className=" object-cover w-16 h-16"
+                            />
+                          </Link>
                           <Button
                             variant="destructive" // Use a more appropriate variant for remove
                             size="sm"
                             onClick={() => removeItem(item.id)}
-                            className="text-xs ring-1 rounded-none ring-gray-500/30 text-red-400"
+                            className="text-xs ring-1 rounded-none cursor-pointer ring-gray-500/30 text-red-400"
                           >
                             Remove
                           </Button>
                         </div>
-                        <div className="flex justify-between items-center mt-2">
+                        <Link
+                          href={`/shop/${item.id}`}
+                          onClick={() => setCartOpen(false)}
+                          className="flex justify-between items-center mt-2"
+                        >
                           <div className="flex flex-col">
                             <h3 className="font-semibold text-gray-900 dark:text-white leading-tight text-base">
                               {item.name}
@@ -117,7 +126,7 @@ export default function CartDrawer({
                           <p className="dark:text-gray-300 text-base font-semibold">
                             ${item.price}
                           </p>
-                        </div>
+                        </Link>
                       </li>
                     ))}
                   </ul>
